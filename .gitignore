@@ -1,0 +1,12 @@
+# Composer
+composer.lock
+/vendor/
+
+.env
+
+# Editor
+/.idea
+
+# Mac
+*._
+.DS_Store
