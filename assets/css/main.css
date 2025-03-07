@@ -1,0 +1,53 @@
+:root {
+    --primary-background-color: #fff;
+    --accent-background-color: #261551;
+
+    --primary-text-color: #261551;
+    --secondary-text-color: #fff;
+    --tertiary-text-color: #000;
+
+    --xxs-spacing: 5px;
+    --xs-spacing: 10px;
+    --s-spacing: 15px;
+    --m-spacing: 20px;
+    --l-spacing: 40px;
+    --xl-spacing: 80px;
+}
+
+* {
+    padding: 0;
+    margin: 0;
+    font-family: "Helvetica Neue", serif;
+}
+
+.button {
+    padding: var(--s-spacing) var(--m-spacing);
+    border: 1px solid transparent;
+    border-radius: 5px;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 100%;
+    cursor: pointer;
+}
+
+.button-accent {
+    background-color: var(--accent-background-color);
+    color: var(--secondary-text-color);
+}
+
+.button-light {
+    background-color: var(--secondary-text-color);
+    color: var(--primary-text-color);
+}
+
+.button-outlined {
+    border-color: var(--primary-text-color);
+    background-color: var(--primary-background-color);
+    color: var(--tertiary-text-color);
+}
+
+.button-outlined-light {
+    border-color: var(--secondary-text-color);
+    background-color: transparent;
+    color: var(--secondary-text-color);
+}
