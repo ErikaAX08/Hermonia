@@ -1,3 +1,10 @@
+/*
+   Asegúrate de que tus variables (var(--xxx)) estén definidas
+   en alguna parte, por ejemplo en :root o en tu reset.
+*/
+
+/* -------- Estilos Generales (ya existentes) -------- */
+
 .home-body {
     display: flex;
     flex-direction: column;
@@ -178,4 +185,45 @@
 
 .home-modal_register_footer .button {
     padding: var(--s-spacing) var(--l-spacing);
+}
+
+.float-label {
+    position: relative;
+    display: block;
+}
+
+.float-label input {
+    width: calc(100% - calc(var(--m-spacing) * 2.2));
+    padding: var(--m-spacing);
+    font-size: 16px;
+    color: var(--tertiary-text-color);
+    border: 2px solid var(--primary-text-color);
+    border-radius: 10px;
+    background-color: var(--primary-background-color);
+    outline: none;
+    transition: border-color 0.2s ease;
+}
+
+.float-label input:focus {
+    border-color: var(--accent-text-color);
+}
+
+.float-label label {
+    position: absolute;
+    top: 1.2rem;
+    left: 1rem;
+    font-size: 16px;
+    color: var(--primary-text-color);
+    pointer-events: none;
+    transition: 0.2s ease all;
+    background: transparent;
+}
+
+.float-label input:focus + label,
+.float-label input:not(:placeholder-shown) + label {
+    top: 0.4rem;
+    font-size: 12px;
+    color: var(--accent-text-color);
+    background: #FFF;
+    padding: 0 0.25rem;
 }
