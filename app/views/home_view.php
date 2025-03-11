@@ -2,6 +2,10 @@
 // Si ya usas estas variables y rutas, mantenlas
 $additional_styles = "views/home.css";
 include BASE_TEMPLATES . 'header.php';
+
+use app\controllers\RegisterController;
+
+
 ?>
 
 <body class="home-body">
@@ -113,7 +117,7 @@ include BASE_TEMPLATES . 'header.php';
             </svg>
         </div>
         <h2 class="home-modal_title">Crear cuenta de Hermonia</h2>
-        <form class="home-modal_form" action="POST">
+        <form class="home-modal_form" method="POST" action="<?php echo BASE_URL; ?>register">
             <!-- CORREO ELECTRÓNICO -->
             <div class="home-modal_form_field float-label">
                 <input
@@ -203,12 +207,14 @@ include BASE_TEMPLATES . 'header.php';
                     Al seleccionar Continuar, aceptas los Términos y Condiciones de los Servicios multimedia
                     de RIEAV y reconoces que iniciarás sesión en este navegador.
                 </span>
+
+            <div class="home-modal_register_footer">
+                <button class="button button-outlined-light">Volver</button>
+                <input class="button button-light" type="submit" name="btnRegister" value="Continuar"/>
+            </div>
         </form>
     </div>
-    <div class="home-modal_register_footer">
-        <button class="button button-outlined-light">Volver</button>
-        <button class="button button-light">Continuar</button>
-    </div>
+
 </div>
 
 <script src="<?php echo BASE_ASSETS; ?>js/home.js"></script>
