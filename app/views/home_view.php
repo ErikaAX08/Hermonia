@@ -1,16 +1,12 @@
 <?php
-// Si ya usas estas variables y rutas, mantenlas
 $additional_styles = "views/home.css";
 include BASE_TEMPLATES . 'header.php';
 
 use app\controllers\RegisterController;
-
-
 ?>
 
 <body class="home-body">
 
-<!-- HOME CONTAINER -->
 <div id="home-main" class="home-container">
     <header class="home-header">
         <div class="home-logo">
@@ -53,7 +49,6 @@ use app\controllers\RegisterController;
     </div>
 </div>
 
-<!-- MODAL LOGIN CONTAINER -->
 <div id="home-modal_login" class="home-modal home-modal_login" style="display: none">
     <div>
         <img src="<?php echo BASE_ASSETS . "img/logo_icon.svg" ?>" alt="Hermonia">
@@ -63,7 +58,6 @@ use app\controllers\RegisterController;
         Puedes iniciar sesión si ya tienes una cuenta o te ayudaremos a crear una.
     </p>
     <form class="home-modal_form" action="POST">
-        <!-- EJEMPLO DE LABEL FLOTANTE -->
         <div class="home-modal_form_field float-label">
             <input
                     class="home-modal_input home-modal_text"
@@ -97,9 +91,8 @@ use app\controllers\RegisterController;
         </span>
 </div>
 
-<!-- MODAL REGISTER CONTAINER -->
 <div id="home-modal_register" class="home-modal home-modal_register" style="display: none">
-    <div class="home-modal_register_container">
+    <div class="home-modal_register_header">
         <div class="home-logo">
             <svg class="home-img_logo" width="221" height="78" viewBox="0 0 221 78" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <g clip-path="url(#clip0_71_5471)">
@@ -117,8 +110,10 @@ use app\controllers\RegisterController;
             </svg>
         </div>
         <h2 class="home-modal_title">Crear cuenta de Hermonia</h2>
-        <form class="home-modal_form" method="POST" action="<?php echo BASE_URL; ?>register">
-            <!-- CORREO ELECTRÓNICO -->
+    </div>
+
+    <div class="home-modal_register_form_container">
+        <form class="home-modal_form" id="registerForm" method="POST" action="<?php echo BASE_URL; ?>register">
             <div class="home-modal_form_field float-label">
                 <input
                         class="home-modal_input home-modal_text"
@@ -130,10 +125,9 @@ use app\controllers\RegisterController;
                 >
                 <label for="emailRegister">Correo Electrónico</label>
                 <span class="home-modal_text_small">
-                        Esta dirección de correo eléctronico será tu cuenta de RIEAV
-                    </span>
+                    Esta dirección de correo eléctronico será tu cuenta de RIEAV
+                </span>
             </div>
-            <!-- CONTRASEÑA -->
             <div class="home-modal_form_field float-label">
                 <input
                         class="home-modal_input home-modal_text"
@@ -145,11 +139,10 @@ use app\controllers\RegisterController;
                 >
                 <label for="passwordRegister">Contraseña</label>
                 <span class="home-modal_text_small">
-                        Tu contraseña debe tener como mínimo 8 caracteres, letras en mayúsculas y minúsculas,
-                        y al menos un número
-                    </span>
+                    Tu contraseña debe tener como mínimo 8 caracteres, letras en mayúsculas y minúsculas,
+                    y al menos un número
+                </span>
             </div>
-            <!-- NOMBRE -->
             <div class="home-modal_form_field float-label">
                 <input
                         class="home-modal_input home-modal_text"
@@ -161,7 +154,6 @@ use app\controllers\RegisterController;
                 >
                 <label for="nombreRegister">Nombre</label>
             </div>
-            <!-- APELLIDOS -->
             <div class="home-modal_form_field float-label">
                 <input
                         class="home-modal_input home-modal_text"
@@ -173,7 +165,6 @@ use app\controllers\RegisterController;
                 >
                 <label for="apellidosRegister">Apellidos</label>
             </div>
-            <!-- FECHA DE NACIMIENTO -->
             <div class="home-modal_form_field float-label">
                 <input
                         class="home-modal_input home-modal_text"
@@ -185,7 +176,6 @@ use app\controllers\RegisterController;
                 >
                 <label for="fechaRegister">Fecha de Nacimiento</label>
             </div>
-            <!-- PAÍS/REGIÓN -->
             <div class="home-modal_form_field float-label">
                 <input
                         class="home-modal_input home-modal_text"
@@ -197,24 +187,27 @@ use app\controllers\RegisterController;
                 >
                 <label for="paisRegister">País/Región</label>
             </div>
-            <!-- CHECKBOX TÉRMINOS -->
             <div class="home-modal_form_check">
                 <input type="checkbox" id="terms" name="terms" required>
                 <label for="terms" class="home-modal_text_small">Aceptar Términos y Condiciones</label>
             </div>
+
+            <input type="hidden" name="btnRegister" value="Continuar">
+
             <hr>
             <span class="home-modal_text_small">
-                    Al seleccionar Continuar, aceptas los Términos y Condiciones de los Servicios multimedia
-                    de RIEAV y reconoces que iniciarás sesión en este navegador.
-                </span>
+                Al seleccionar Continuar, aceptas los Términos y Condiciones de los Servicios multimedia
+                de RIEAV y reconoces que iniciarás sesión en este navegador.
+            </span>
 
-            <div class="home-modal_register_footer">
-                <button class="button button-outlined-light">Volver</button>
-                <input class="button button-light" type="submit" name="btnRegister" value="Continuar"/>
-            </div>
+            <div class="form-bottom-spacer"></div>
         </form>
     </div>
 
+    <div class="home-modal_register_footer">
+        <button class="button button-outlined-light">Volver</button>
+        <button class="button button-light" type="submit" form="registerForm">Continuar</button>
+    </div>
 </div>
 
 <script src="<?php echo BASE_ASSETS; ?>js/home.js"></script>
