@@ -8,7 +8,7 @@ class Router {
         define('BASE_VIEWS', BASE_PATH . 'app/views/');
         define('BASE_TEMPLATES', BASE_PATH . 'app/templates/');
         define('BASE_ASSETS', '/Hermonia/assets/');
-        define('BASE_URL', 'http://localhost:8012/Hermonia/');
+        define('BASE_URL', 'http://localhost/Hermonia/');
 
         $route = isset($_GET['route']) ? $_GET['route'] : 'home';
 
