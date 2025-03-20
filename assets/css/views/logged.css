@@ -1,0 +1,34 @@
+.logged-body {
+    padding: var(--xl-spacing);
+    min-height: calc(100vh - calc(var(--xl-spacing) * 2));
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.logged-main {
+    display: flex;
+    flex-direction: row;
+    gap: var(--xl-spacing);
+    align-items: center;
+    max-width: 70%;
+}
+
+.logged-header {
+    display: flex;
+    flex-direction: column;
+    gap: var(--l-spacing);
+}
+
+.logged-button {
+    background-color: var(--accent-background-color);
+    color: var(--secondary-text-color);
+    width: fit-content;
+}
+
+.logged-title {
+    color: var(--primary-text-color);
+    font-size: 42px;
+    font-weight: 700;
+}
