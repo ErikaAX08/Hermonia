@@ -1,10 +1,3 @@
-/*
-   Asegúrate de que tus variables (var(--xxx)) estén definidas
-   en alguna parte, por ejemplo en :root o en tu reset.
-*/
-
-/* -------- Estilos Generales (ya existentes) -------- */
-
 .home-body {
     display: flex;
     flex-direction: column;
@@ -104,30 +97,13 @@
     text-align: center;
 }
 
-.home-modal_login,
-.home-modal_register_container {
+.home-modal_login {
     display: flex;
     flex-direction: column;
     gap: var(--l-spacing);
     justify-content: center;
     padding: var(--l-spacing) var(--xl-spacing);
     align-items: center;
-}
-
-.home-modal_register_container {
-    max-height: 80vh;
-    height: auto;
-    overflow-y: auto;
-    box-sizing: border-box;
-    padding-top: var(--xl-spacing);
-}
-
-.home-modal_register_container .home-logo {
-    margin-top: var(--l-spacing);
-}
-
-.home-modal_register_container .home-modal_title {
-    color: var(--primary-text-color);
 }
 
 .home-modal_form {
@@ -163,28 +139,76 @@
 .home-modal_register {
     display: flex;
     flex-direction: column;
+    max-height: 80vh;
+    overflow: hidden;
+    width: 800px;
+    max-width: 100%;
+    margin: 0 auto;
+    position: absolute;
 }
 
-.home-modal_register_container .home-modal_form {
-    max-width: 70%;
-    width: 100%;
+.home-modal_register_header {
+    padding: var(--m-spacing) var(--l-spacing);
+    background-color: var(--primary-background-color);
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
-.home-modal_register_container .home-modal_form_field .home-modal_text_small {
-    text-align: start;
+.home-modal_register_header .home-logo {
+    width: 120px;
+    margin-bottom: var(--s-spacing);
+}
+
+.home-modal_register_header .home-modal_title {
+    color: var(--primary-text-color);
+    margin: var(--s-spacing) 0;
+    text-align: center;
+}
+
+.home-modal_register_form_container {
+    flex: 1;
+    overflow-y: auto;
+    padding: 0 var(--l-spacing);
+}
+
+.home-modal_register .home-modal_form {
+    width: 70%;
+    padding: var(--m-spacing) 0;
+    margin: 0 auto;
+}
+
+.form-bottom-spacer {
+    height: var(--xl-spacing);
 }
 
 .home-modal_register_footer {
     display: flex;
     flex-direction: row;
-    justify-content: end;
+    justify-content: flex-end;
     gap: var(--s-spacing);
     background-color: var(--accent-background-color);
     padding: var(--m-spacing);
+    position: sticky;
+    bottom: 0;
+    width: calc(100% - calc(var(--m-spacing) * 2));
+    z-index: 10;
+    box-shadow: 0 -4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.home-modal_form_field {
+    margin-bottom: var(--m-spacing);
+}
+
+.home-modal_form_check {
+    margin: var(--s-spacing) 0;
+    align-items: center;
 }
 
 .home-modal_register_footer .button {
     padding: var(--s-spacing) var(--l-spacing);
+    font-weight: 500;
 }
 
 .float-label {
