@@ -15,6 +15,10 @@
     --m-spacing: 20px;
     --l-spacing: 40px;
     --xl-spacing: 80px;
+
+    --s-border: 5px;
+    --m-border: 10px;
+    --l-border: 30px;
 }
 
 * {
