@@ -166,10 +166,238 @@
     position: relative;
 }
 
-.player-player_controls {
+/* Estilos para el controlador del reproductor */
+.player-controller {
     position: absolute;
     bottom: 0;
+    left: 0;
+    right: 0;
     border-top: 2px solid var(--accent-background-color);
     padding: var(--m-spacing);
-    width: -webkit-fill-available;
+    width: calc(100% - var(--m-spacing) * 2);
+    margin: 0 auto;
+    display: flex;
+    flex-direction: row;
+    gap: var(--s-spacing);
+    align-items: center;
+}
+
+.player-controller_controls {
+    flex-basis: 100%;
+}
+
+.player-controller_info {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: var(--s-spacing);
+}
+
+.player-controller_cover {
+    width: 60px;
+    height: 60px;
+    border-radius: var(--s-border);
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+.player-controller_cover img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.player-controller_details {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.player-controller_song {
+    font-weight: bold;
+    font-size: 16px;
+    margin-bottom: 4px;
+}
+
+.player-controller_artist {
+    font-size: 14px;
+    color: rgba(var(--primary-text-color), 0.8);
+}
+
+.player-controller_wrapper,
+.player-controller_like_container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.player-controller_like_container {
+    gap: var(--xs-spacing);
+    border: 1px solid var(--accent-background-color);
+    padding: var(--s-spacing);
+    border-radius: var(--xm-border);
+}
+
+.player-controller_controls {
+    display: flex;
+    flex-direction: column;
+    gap: var(--m-spacing);
+}
+
+.player-controller_controls_main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: var(--m-spacing);
+}
+
+.player-controller_controls_secondary {
+    display: flex;
+    align-items: center;
+    gap: var(--s-spacing);
+}
+
+.player-controller_button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.player-controller_button:hover {
+    transform: scale(1.1);
+}
+
+.player-controller_button-play {
+    width: 50px;
+    height: 50px;
+    background-color: var(--accent-background-color);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.player-controller_button-play svg path {
+    fill: white;
+}
+
+.player-like_container {
+    display: flex;
+    align-items: center;
+    gap: var(--xs-spacing);
+}
+
+.player-like_button, .player-save_button {
+    background: none;
+    border: 1px solid var(--accent-background-color);
+    border-radius: var(--s-border);
+    padding: var(--xs-spacing);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+/* Volume controller */
+.player-controller_volume_container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: var(--xs-spacing);
+}
+
+.player-controller_volume_slider {
+    width: 80px;
+    height: 4px;
+    background-color: rgba(118, 83, 255, 0.3);
+    border-radius: 2px;
+    position: relative;
+    cursor: pointer;
+}
+
+.player-controller_volume_bar {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 50%;
+    background-color: #7653FF;
+    border-radius: 2px;
+}
+
+.player-controller_volume_handle {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background-color: #7653FF;
+    border-radius: 50%;
+    top: 50%;
+    left: 50%;
+    margin-left: -5px;
+    transform: translateY(-50%);
+    cursor: pointer;
+    z-index: 1;
+}
+
+.player-controller_button-volume {
+    background: none;
+    border: none;
+    padding: 5px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.player-controller_button-volume:hover {
+    opacity: 0.8;
+}
+
+.player-controller_button-volume svg {
+    width: 16px;
+    height: 16px;
+}
+
+/* Time progress slider */
+
+.player-controller_time_progress {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: var(--s-spacing);
+}
+
+.player-controller_progress_container {
+    flex: 1;
+    height: 4px;
+    background-color: rgba(118, 83, 255, 0.3);
+    border-radius: 2px;
+    position: relative;
+    cursor: pointer;
+}
+
+.player-controller_progress_bar {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    background-color: #7653FF;
+    border-radius: 2px;
+}
+
+.player-controller_progress_handle {
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    background-color: #7653FF;
+    border-radius: 50%;
+    top: 50%;
+    margin-left: -6px;
+    transform: translateY(-50%);
+    cursor: pointer;
 }
