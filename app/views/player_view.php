@@ -178,7 +178,174 @@ include BASE_TEMPLATES . 'header.php';
         </div>
     </aside>
     <div class="player-container player-content">
-        Descubrir
+        <!-- Page -->
+        <div class="player-page">
+            <h2 class="player-page_title">Descubrir</h2>
+            <div class="player-page_slider_section">
+                <div class="player-page_slider_nav_container">
+                    <div class="player-page_slider_nav_button player-page_slider_nav_button_back">
+                        <img src="<?php echo BASE_ASSETS; ?>img/icons/slider_arrow_back.svg" alt="">
+                    </div>
+                    <div class="player-page_slider_nav_button player-page_slider_nav_button_next">
+                        <img src="<?php echo BASE_ASSETS; ?>img/icons/slider_arrow_next.svg" alt="">
+                    </div>
+                </div>
+                <div class="player-page_content_slider">
+                    <!-- Playlist slider -->
+                    <div class="player-page_playlist_card">
+                        <div class="player-page_playlist_card_info_container">
+                            <p class="player-page_playlist_card_info">Playlist Actualizada</p>
+                            <h3 class="player-page_playlist_card_title">De Antro</h3>
+                            <span class="player-page_playlist_card_category">RIEV Hermonia Dance</span>
+                        </div>
+                        <img class="player-page_playlist_card_img" src="<?php echo BASE_ASSETS; ?>img/playlist/de_antro.png" alt="De Antro">
+                    </div>
+                    <div class="player-page_playlist_card">
+                        <div class="player-page_playlist_card_info_container">
+                            <p class="player-page_playlist_card_info">Playlist Actualizada</p>
+                            <h3 class="player-page_playlist_card_title">El Nuevo Orden</h3>
+                            <span class="player-page_playlist_card_category">RIEV Hermonia Latinoamérica</span>
+                        </div>
+                        <img class="player-page_playlist_card_img" src="<?php echo BASE_ASSETS; ?>img/playlist/nuevo_orden.png" alt="De Antro">
+                    </div>
+                    <div class="player-page_playlist_card">
+                        <div class="player-page_playlist_card_info_container">
+                            <p class="player-page_playlist_card_info">Playlist Actualizada</p>
+                            <h3 class="player-page_playlist_card_title">Viral</h3>
+                            <span class="player-page_playlist_card_category">RIEV Hermonia</span>
+                        </div>
+                        <img class="player-page_playlist_card_img" src="<?php echo BASE_ASSETS; ?>img/playlist/viral.png" alt="De Antro">
+                    </div>
+                    <div class="player-page_playlist_card">
+                        <div class="player-page_playlist_card_info_container">
+                            <p class="player-page_playlist_card_info">Playlist Actualizada</p>
+                            <h3 class="player-page_playlist_card_title">¡Dale Play!</h3>
+                            <span class="player-page_playlist_card_category">RIEV Hermonia Latinoamérica</span>
+                        </div>
+                        <img class="player-page_playlist_card_img" src="<?php echo BASE_ASSETS; ?>img/playlist/dale_play.png" alt="De Antro">
+                    </div>
+                </div>
+            </div>
+            <h3 class="player-page_playlist_card_title">Canciones Nuevas</h3>
+            <div class="player-page_slider_section">
+                <div class="player-page_slider_nav_container">
+                    <div class="player-page_slider_nav_button player-page_slider_nav_button_back">
+                        <img src="<?php echo BASE_ASSETS; ?>img/icons/slider_arrow_back.svg" alt="">
+                    </div>
+                    <div class="player-page_slider_nav_button player-page_slider_nav_button_next">
+                        <img src="<?php echo BASE_ASSETS; ?>img/icons/slider_arrow_next.svg" alt="">
+                    </div>
+                </div>
+                <div class="player-page_content_slider">
+                    <!-- Song card -->
+                    <div class="player-page_songs_container">
+                        <div class="player-page_song_card">
+                            <img class="player-page_song_card_img" src="<?php echo BASE_ASSETS; ?>img/songs/eme.jpeg" alt="">
+                            <div class="player-page_song_card_info">
+                                <h4>EME</h4>
+                                <span>Nsqk</span>
+                            </div>
+                            <img class="player-page_song_card_menu" src="<?php echo BASE_ASSETS; ?>img/icons/menu_points.svg" alt="">
+                        </div>
+                        <div class="player-page_song_card">
+                            <img class="player-page_song_card_img" src="<?php echo BASE_ASSETS; ?>img/songs/eme.jpeg" alt="">
+                            <div class="player-page_song_card_info">
+                                <h4>EME</h4>
+                                <span>Nsqk</span>
+                            </div>
+                            <img class="player-page_song_card_menu" src="<?php echo BASE_ASSETS; ?>img/icons/menu_points.svg" alt="">
+                        </div>
+                        <div class="player-page_song_card">
+                            <img class="player-page_song_card_img" src="<?php echo BASE_ASSETS; ?>img/songs/eme.jpeg" alt="">
+                            <div class="player-page_song_card_info">
+                                <h4>EME</h4>
+                                <span>Nsqk</span>
+                            </div>
+                            <img class="player-page_song_card_menu" src="<?php echo BASE_ASSETS; ?>img/icons/menu_points.svg" alt="">
+                        </div>
+                    </div>
+                    <div class="player-page_songs_container">
+                        <div class="player-page_song_card">
+                            <img class="player-page_song_card_img" src="<?php echo BASE_ASSETS; ?>img/songs/eme.jpeg" alt="">
+                            <div class="player-page_song_card_info">
+                                <h4>EME</h4>
+                                <span>Nsqk</span>
+                            </div>
+                            <img class="player-page_song_card_menu" src="<?php echo BASE_ASSETS; ?>img/icons/menu_points.svg" alt="">
+                        </div>
+                        <div class="player-page_song_card">
+                            <img class="player-page_song_card_img" src="<?php echo BASE_ASSETS; ?>img/songs/eme.jpeg" alt="">
+                            <div class="player-page_song_card_info">
+                                <h4>EME</h4>
+                                <span>Nsqk</span>
+                            </div>
+                            <img class="player-page_song_card_menu" src="<?php echo BASE_ASSETS; ?>img/icons/menu_points.svg" alt="">
+                        </div>
+                        <div class="player-page_song_card">
+                            <img class="player-page_song_card_img" src="<?php echo BASE_ASSETS; ?>img/songs/eme.jpeg" alt="">
+                            <div class="player-page_song_card_info">
+                                <h4>EME</h4>
+                                <span>Nsqk</span>
+                            </div>
+                            <img class="player-page_song_card_menu" src="<?php echo BASE_ASSETS; ?>img/icons/menu_points.svg" alt="">
+                        </div>
+                    </div>
+                    <div class="player-page_songs_container">
+                        <div class="player-page_song_card">
+                            <img class="player-page_song_card_img" src="<?php echo BASE_ASSETS; ?>img/songs/eme.jpeg" alt="">
+                            <div class="player-page_song_card_info">
+                                <h4>EME</h4>
+                                <span>Nsqk</span>
+                            </div>
+                            <img class="player-page_song_card_menu" src="<?php echo BASE_ASSETS; ?>img/icons/menu_points.svg" alt="">
+                        </div>
+                        <div class="player-page_song_card">
+                            <img class="player-page_song_card_img" src="<?php echo BASE_ASSETS; ?>img/songs/eme.jpeg" alt="">
+                            <div class="player-page_song_card_info">
+                                <h4>EME</h4>
+                                <span>Nsqk</span>
+                            </div>
+                            <img class="player-page_song_card_menu" src="<?php echo BASE_ASSETS; ?>img/icons/menu_points.svg" alt="">
+                        </div>
+                        <div class="player-page_song_card">
+                            <img class="player-page_song_card_img" src="<?php echo BASE_ASSETS; ?>img/songs/eme.jpeg" alt="">
+                            <div class="player-page_song_card_info">
+                                <h4>EME</h4>
+                                <span>Nsqk</span>
+                            </div>
+                            <img class="player-page_song_card_menu" src="<?php echo BASE_ASSETS; ?>img/icons/menu_points.svg" alt="">
+                        </div>
+                    </div>
+                    <div class="player-page_songs_container">
+                        <div class="player-page_song_card">
+                            <img class="player-page_song_card_img" src="<?php echo BASE_ASSETS; ?>img/songs/eme.jpeg" alt="">
+                            <div class="player-page_song_card_info">
+                                <h4>EME</h4>
+                                <span>Nsqk</span>
+                            </div>
+                            <img class="player-page_song_card_menu" src="<?php echo BASE_ASSETS; ?>img/icons/menu_points.svg" alt="">
+                        </div>
+                        <div class="player-page_song_card">
+                            <img class="player-page_song_card_img" src="<?php echo BASE_ASSETS; ?>img/songs/eme.jpeg" alt="">
+                            <div class="player-page_song_card_info">
+                                <h4>EME</h4>
+                                <span>Nsqk</span>
+                            </div>
+                            <img class="player-page_song_card_menu" src="<?php echo BASE_ASSETS; ?>img/icons/menu_points.svg" alt="">
+                        </div>
+                        <div class="player-page_song_card">
+                            <img class="player-page_song_card_img" src="<?php echo BASE_ASSETS; ?>img/songs/eme.jpeg" alt="">
+                            <div class="player-page_song_card_info">
+                                <h4>EME</h4>
+                                <span>Nsqk</span>
+                            </div>
+                            <img class="player-page_song_card_menu" src="<?php echo BASE_ASSETS; ?>img/icons/menu_points.svg" alt="">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- Controller -->
         <div class="player-controller">
             <div class="player-controller_controls">
