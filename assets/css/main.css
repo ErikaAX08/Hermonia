@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+
 :root {
     --primary-background-color: #fff;
     --accent-background-color: #261551;
@@ -13,12 +15,17 @@
     --m-spacing: 20px;
     --l-spacing: 40px;
     --xl-spacing: 80px;
+
+    --s-border: 5px;
+    --m-border: 10px;
+    --xm-border: 20px;
+    --l-border: 30px;
 }
 
 * {
     padding: 0;
     margin: 0;
-    font-family: "Helvetica Neue", serif;
+    font-family: "Helvetica Neue", "Inter", sans-serif;;
 }
 
 .button {

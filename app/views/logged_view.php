@@ -8,7 +8,7 @@ include BASE_TEMPLATES . 'header.php';
     <main class="logged-main">
         <header class="logged-header">
             <h2 class="logged-title">Ahora eres parte de la familia de Hermonia</h2>
-            <button class="button logged-button">Empezar a escuchar música</button>
+            <button class="button logged-button" id="navigate_to_player">Empezar a escuchar música</button>
         </header>
         <div class="logged-img_container">
             <svg width="489" height="560" viewBox="0 0 489 560" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -47,5 +47,7 @@ include BASE_TEMPLATES . 'header.php';
             </svg>
         </div>
     </main>
+
+    <script src="<?php echo BASE_ASSETS; ?>js/logged.js"></script>
 
 </body>
