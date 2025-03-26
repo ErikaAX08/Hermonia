@@ -211,5 +211,47 @@ use app\controllers\RegisterController;
 </div>
 
 <script src="<?php echo BASE_ASSETS; ?>js/home.js"></script>
+<script>
+  registerForm.addEventListener("submit", function (event) {
+    console.log("Evento submit activado"); // Depuración
+    const password = passwordRegister.value.trim();
+    const fechaNacimiento = document.getElementById("fechaRegister").value; // Obtener la fecha de nacimiento
+
+    // Validar la contraseña
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,}$/;
+
+    if (!passwordRegex.test(password)) {
+        console.log("Contraseña no válida"); // Depuración
+        event.preventDefault(); // Evitar que el formulario se envíe
+        alert(
+            "La contraseña debe tener al menos 8 caracteres, incluir letras mayúsculas y minúsculas, y al menos un número."
+        );
+        passwordRegister.focus(); // Enfocar el campo de contraseña
+        return; // Salir de la función
+    }
+
+    // Validar la fecha de nacimiento
+    const fechaNacimientoDate = new Date(fechaNacimiento);
+    const fechaActual = new Date();
+    const edad = fechaActual.getFullYear() - fechaNacimientoDate.getFullYear();
+    const mes = fechaActual.getMonth() - fechaNacimientoDate.getMonth();
+    const dia = fechaActual.getDate() - fechaNacimientoDate.getDate();
+
+    // Ajustar la edad si el mes o el día actual es menor que el mes o día de nacimiento
+    if (mes < 0 || (mes === 0 && dia < 0)) {
+        edad--;
+    }
+
+    if (isNaN(fechaNacimientoDate.getTime()) || edad < 13) {
+        console.log("Fecha de nacimiento no válida o menor de 13 años"); // Depuración
+        event.preventDefault(); // Evitar que el formulario se envíe
+        alert("Debes tener al menos 13 años para registrarte.");
+        document.getElementById("fechaRegister").focus(); // Enfocar el campo de fecha de nacimiento
+        return; // Salir de la función
+    }
+
+    console.log("Formulario válido"); // Depuración
+});
+</script>
 
 </body>

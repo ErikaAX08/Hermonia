@@ -4,6 +4,8 @@ document.addEventListener("DOMContentLoaded", function () {
     const home_login_button = document.getElementById("home-button_login");
     const home_register_button = document.getElementById("home-button_register");
     const home_register_modal = document.getElementById("home-modal_register");
+    const registerForm = document.getElementById("registerForm");
+    const passwordInput = document.getElementById("passwordRegister");
 
     home_login_button.addEventListener("click", function (e) {
         openModal(home_login_modal);
@@ -25,8 +27,9 @@ document.addEventListener("DOMContentLoaded", function () {
             closeModal();
         }
     });
+    
 
-    function openModal (modal) {
+    function openModal(modal) {
         home_container.style.opacity = "0.2";
         modal.style.display = "flex";
     }
@@ -36,4 +39,4 @@ document.addEventListener("DOMContentLoaded", function () {
         home_login_modal.style.display = "none";
         home_register_modal.style.display = "none";
     }
-})
+});
