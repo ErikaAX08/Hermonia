@@ -21,8 +21,17 @@ class Router {
         define('BASE_ASSETS', $baseDir . 'assets/');
         define('BASE_URL', $protocol . $host . $baseDir);
 
-        $route = $_GET['route'] ?? 'home';
+        // ✅ Manejo de solicitudes POST
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            if ($_SERVER['REQUEST_URI'] === $baseDir . 'login') {
+                $controller = new \App\Controllers\LoginController();
+                $controller->login();
+                return;
+            }
+        }
 
+        // Manejo de rutas GET
+        $route = $_GET['route'] ?? 'home';
         $controller = ucfirst($route) . 'Controller';
         $controller = "App\\Controllers\\" . $controller;
 
@@ -34,15 +43,11 @@ class Router {
         }
     }
 
-    /**
-     * Carga la configuración desde un archivo PHP
-     */
     private function loadConfig() {
         $configFile = BASE_PATH . 'app/config/app.php';
         if (file_exists($configFile)) {
             $this->config = require $configFile;
         } else {
-            // Configuración predeterminada si no existe el archivo
             $this->config = [
                 'app' => [
                     'base_dir' => '/Hermonia/'
@@ -51,9 +56,6 @@ class Router {
         }
     }
 
-    /**
-     * Determina el directorio base de la aplicación basándose en la URI
-     */
     private function getBaseDir($requestUri) {
         $pos = strpos($requestUri, 'Hermonia');
         if ($pos !== false) {

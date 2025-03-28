@@ -57,31 +57,22 @@ use app\controllers\RegisterController;
     <p class="home-modal_text">
         Puedes iniciar sesión si ya tienes una cuenta o te ayudaremos a crear una.
     </p>
-    <form class="home-modal_form" action="POST">
-        <div class="home-modal_form_field float-label">
-            <input
-                    class="home-modal_input home-modal_text"
-                    type="email"
-                    name="emailLogin"
-                    id="emailLogin"
-                    placeholder=" "
-                    required
-            >
-            <label for="emailLogin">Correo Electrónico</label>
-        </div>
-        <div class="home-modal_form_field float-label">
-            <input
-                    class="home-modal_input home-modal_text"
-                    type="password"
-                    name="passwordLogin"
-                    id="passwordLogin"
-                    placeholder=" "
-                    required
-            >
-            <label for="passwordLogin">Contraseña</label>
-        </div>
-        <input class="button button-accent" type="submit" value="Continuar">
-    </form>
+
+        <form class="home-modal_form" id="loginForm" method="POST" action="<?php echo BASE_URL; ?>login">
+            <div class="home-modal_form_field float-label">
+                <input class="home-modal_input" type="email" name="emailLogin" id="emailLogin" placeholder=" " required>
+                <label for="emailLogin">Correo Electrónico</label>
+            </div>
+            <div class="home-modal_form_field float-label">
+                <input class="home-modal_input" type="password" name="passwordLogin" id="passwordLogin" placeholder=" " required>
+                <label for="passwordLogin">Contraseña</label>
+            </div>
+            <div class="home-modal_login_footer">
+                <button class="button button-outlined-light">Volver</button>
+                <button class="button button-light" type="submit" form="loginForm">Continuar</button>
+             </div>
+        </form>
+
     <span class="home-modal_text_small">
             La información de tu cuenta de RIEAV se usa para permitirte iniciar sesión de manera segura y
             para acceder a tus datos. RIEAV recopila determinados datos por motivos de seguridad, soporte
