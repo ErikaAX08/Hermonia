@@ -154,9 +154,13 @@ include BASE_TEMPLATES . 'header.php';
         </div>
         <div class="player-profile_container">
             <div class="player-profile_info">
-                <h3 class="player-profile_username">Ivan Torres</h3>
-                <span class="player-search_subscription">Prueba Gratuita</span>
-                <button class="button button-accent">Mejorar Plan</button>
+                <?php if(isset($user)) : ?>
+                    <h3 class="player-profile_username"><?php echo htmlspecialchars($user['nombre'] ?? ''); ?></h3>
+                    <span class="player-search_subscription"><?php echo htmlspecialchars($user['suscripcion'] ?? ''); ?></span>
+                    <button class="button button-accent">Mejorar Plan</button>
+                <?php else : ?>
+                    <p>No se pudieron cargar los datos del usuario.</p>
+                <?php endif; ?>
             </div>
             <div class="player-profile_options">
                 <div>
