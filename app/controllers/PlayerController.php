@@ -13,13 +13,10 @@ class PlayerController extends Controller {
     }
 
     public function index() {
-       //Verificar sesion
-       if (!isset($_SESSION['user_id'])) {
-            echo "Error: No hay sesión activa.";
-            echo "<pre>";
-            print_r($_SESSION);  
-            echo "</pre>";
-            header("Location: " . BASE_URL . "player");
+        session_start();
+
+        if (!isset($_SESSION['user_id'])) {
+            header('Location: ' . BASE_URL . 'login');
             exit;
         }
 
@@ -29,33 +26,23 @@ class PlayerController extends Controller {
         $stmtUser = $this->db->pdo->prepare($sqlUser);
         $stmtUser->bindParam(':id', $userId);
         $stmtUser->execute();
-
         $user = $stmtUser->fetch();
+
         if (!$user) {
             echo "Error: Usuario no encontrado en la base de datos.";
             echo "<pre>";
             print_r($_SESSION);
             echo "</pre>";
+            
+            // Si el usuario no existe, cerrar sesión y redirigir a login
+            session_destroy();
+            header("Location: " . BASE_URL . "login");
             exit;
         }
 
-        // Recuperar los datos de los artistas
-        $sqlArtists = "SELECT * FROM artistas";
-        $stmtArtists = $this->db->pdo->query($sqlArtists);
-        $artists = $stmtArtists->fetchAll();
-
-        //Pasar los datos a la vista
-        $data = [
-            'user' => $user,
-            'artists' => $artists
-        ];
-
-            // Mostrar los datos para depuración
-            echo "<pre>";
-            print_r($data);
-            echo "</pre>";
-
-        // Pasar los datos a la vista
-        $this->view('player', $data);
+        // Pasar los datos del usuario a la vista
+        $this->view('player', [
+            'user' => $user
+        ]);
     }
 }

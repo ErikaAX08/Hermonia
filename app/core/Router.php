@@ -21,7 +21,7 @@ class Router {
         define('BASE_ASSETS', $baseDir . 'assets/');
         define('BASE_URL', $protocol . $host . $baseDir);
 
-        // ✅ Manejo de solicitudes POST
+
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if ($_SERVER['REQUEST_URI'] === $baseDir . 'login') {
                 $controller = new \App\Controllers\LoginController();
