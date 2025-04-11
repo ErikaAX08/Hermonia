@@ -16,7 +16,7 @@ class PlayerController extends Controller {
         session_start();
 
         if (!isset($_SESSION['user_id'])) {
-            header('Location: ' . BASE_URL . 'login');
+            header('Location: ' . BASE_URL . 'player');
             exit;
         }
 
@@ -36,13 +36,32 @@ class PlayerController extends Controller {
             
             // Si el usuario no existe, cerrar sesión y redirigir a login
             session_destroy();
-            header("Location: " . BASE_URL . "login");
+            header("Location: " . BASE_URL . "home");
             exit;
         }
 
+          // Recuperar las canciones y sus relaciones
+        $sqlSongs = "
+            SELECT 
+                canciones.id AS song_id,
+                canciones.title AS song_title,
+                canciones.duracion AS song_duration,
+                canciones.path AS song_path,
+                albums.title AS album_title,
+                albums.artwork_path AS album_artwork,
+                artists.name AS artist_name
+            FROM canciones
+            INNER JOIN albums ON canciones.album_id = albums.id
+            INNER JOIN artists ON canciones.artista_id = artists.id
+            ORDER BY canciones.id;
+        ";
+        $stmtSongs = $this->db->pdo->query($sqlSongs);
+        $songs = $stmtSongs->fetchAll();
+
         // Pasar los datos del usuario a la vista
         $this->view('player', [
-            'user' => $user
+            'user' => $user,
+            'songs' => $songs,
         ]);
     }
 }

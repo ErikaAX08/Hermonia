@@ -240,16 +240,17 @@ include BASE_TEMPLATES . 'header.php';
                         <img src="<?php echo BASE_ASSETS; ?>img/icons/slider_arrow_next.svg" alt="">
                     </div>
                 </div>
-                <div class="player-page_content_slider">
+            <div class="player-page_content_slider">
+                <?php foreach ($songs as $song): ?>
                     <!-- Song card -->
                     <div class="player-page_songs_container">
                         <div class="player-page_song_card">
-                            <img class="player-page_song_card_img" src="<?php echo BASE_ASSETS; ?>img/songs/eme.jpeg" alt="">
+                            <img class="player-page_song_card_img" src="<?php echo htmlspecialchars($song['album_artwork']); ?>" alt="<?php echo htmlspecialchars($song['album_title']); ?>">
                             <div class="player-page_song_card_info">
-                                <h4>EME</h4>
-                                <span>Nsqk</span>
+                                <h4><?php echo htmlspecialchars($song['song_title']); ?></h4>
+                                <span><?php echo htmlspecialchars($song['artist_name']); ?></span>
                             </div>
-                            <img class="player-page_song_card_menu" src="<?php echo BASE_ASSETS; ?>img/icons/menu_points.svg" alt="">
+                            <img class="player-page_song_card_menu" src="<?php echo BASE_ASSETS; ?>img/icons/menu_points.svg" alt="Menu">
                         </div>
                         <div class="player-page_song_card">
                             <img class="player-page_song_card_img" src="<?php echo BASE_ASSETS; ?>img/songs/eme.jpeg" alt="">
@@ -346,6 +347,7 @@ include BASE_TEMPLATES . 'header.php';
                             <img class="player-page_song_card_menu" src="<?php echo BASE_ASSETS; ?>img/icons/menu_points.svg" alt="">
                         </div>
                     </div>
+                    <?php endforeach; ?>
                 </div>
             </div>
         </div>
