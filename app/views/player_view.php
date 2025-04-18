@@ -158,6 +158,7 @@ include BASE_TEMPLATES . 'header.php';
                     <h3 class="player-profile_username"><?php echo htmlspecialchars($user['nombre'] ?? ''); ?></h3>
                     <span class="player-search_subscription"><?php echo htmlspecialchars($user['suscripcion'] ?? ''); ?></span>
                     <button class="button button-accent">Mejorar Plan</button>
+                    <button class="logout button" onclick="window.location.href='<?php echo BASE_URL; ?>?route=logout'">Cerrar Sesión</button>
                 <?php else : ?>
                     <p>No se pudieron cargar los datos del usuario.</p>
                 <?php endif; ?>
@@ -241,119 +242,38 @@ include BASE_TEMPLATES . 'header.php';
                     </div>
                 </div>
             <div class="player-page_content_slider">
-                <?php foreach ($songs as $song): ?>
+                <?php
+                $songRows = array_chunk($songs, 3);
+                foreach($songRows as $row): 
+                ?>
                     <!-- Song card -->
                     <div class="player-page_songs_container">
-                        <div class="player-page_song_card">
-                            <img class="player-page_song_card_img" src="<?php echo htmlspecialchars($song['album_artwork']); ?>" alt="<?php echo htmlspecialchars($song['album_title']); ?>">
-                            <div class="player-page_song_card_info">
-                                <h4><?php echo htmlspecialchars($song['song_title']); ?></h4>
-                                <span><?php echo htmlspecialchars($song['artist_name']); ?></span>
+                        <?php foreach ($row as $song): ?>
+                            <div class="player-page_song_card" data-song-path="assets/songs/Mora-MEDIA_LUNA.mp3">
+                                <img class="player-page_song_card_img" 
+                                    src="<?php echo htmlspecialchars($song['album_artwork']); ?>" 
+                                    alt="<?php echo htmlspecialchars($song['album_title']); ?>">
+                                <div class="player-page_song_card_info">
+                                    <h4><?php echo htmlspecialchars($song['song_title']); ?></h4>
+                                    <span><?php echo htmlspecialchars($song['artist_name']); ?></span>
+                                </div>
+                                <img class="player-page_song_card_menu" 
+                                    src="<?php echo BASE_ASSETS; ?>img/icons/menu_points.svg" 
+                                    alt="Menu">
                             </div>
-                            <img class="player-page_song_card_menu" src="<?php echo BASE_ASSETS; ?>img/icons/menu_points.svg" alt="Menu">
-                        </div>
-                        <div class="player-page_song_card">
-                            <img class="player-page_song_card_img" src="<?php echo BASE_ASSETS; ?>img/songs/eme.jpeg" alt="">
-                            <div class="player-page_song_card_info">
-                                <h4>EME</h4>
-                                <span>Nsqk</span>
-                            </div>
-                            <img class="player-page_song_card_menu" src="<?php echo BASE_ASSETS; ?>img/icons/menu_points.svg" alt="">
-                        </div>
-                        <div class="player-page_song_card">
-                            <img class="player-page_song_card_img" src="<?php echo BASE_ASSETS; ?>img/songs/eme.jpeg" alt="">
-                            <div class="player-page_song_card_info">
-                                <h4>EME</h4>
-                                <span>Nsqk</span>
-                            </div>
-                            <img class="player-page_song_card_menu" src="<?php echo BASE_ASSETS; ?>img/icons/menu_points.svg" alt="">
-                        </div>
+                        <?php endforeach; ?>
                     </div>
-                    <div class="player-page_songs_container">
-                        <div class="player-page_song_card">
-                            <img class="player-page_song_card_img" src="<?php echo BASE_ASSETS; ?>img/songs/eme.jpeg" alt="">
-                            <div class="player-page_song_card_info">
-                                <h4>EME</h4>
-                                <span>Nsqk</span>
-                            </div>
-                            <img class="player-page_song_card_menu" src="<?php echo BASE_ASSETS; ?>img/icons/menu_points.svg" alt="">
-                        </div>
-                        <div class="player-page_song_card">
-                            <img class="player-page_song_card_img" src="<?php echo BASE_ASSETS; ?>img/songs/eme.jpeg" alt="">
-                            <div class="player-page_song_card_info">
-                                <h4>EME</h4>
-                                <span>Nsqk</span>
-                            </div>
-                            <img class="player-page_song_card_menu" src="<?php echo BASE_ASSETS; ?>img/icons/menu_points.svg" alt="">
-                        </div>
-                        <div class="player-page_song_card">
-                            <img class="player-page_song_card_img" src="<?php echo BASE_ASSETS; ?>img/songs/eme.jpeg" alt="">
-                            <div class="player-page_song_card_info">
-                                <h4>EME</h4>
-                                <span>Nsqk</span>
-                            </div>
-                            <img class="player-page_song_card_menu" src="<?php echo BASE_ASSETS; ?>img/icons/menu_points.svg" alt="">
-                        </div>
-                    </div>
-                    <div class="player-page_songs_container">
-                        <div class="player-page_song_card">
-                            <img class="player-page_song_card_img" src="<?php echo BASE_ASSETS; ?>img/songs/eme.jpeg" alt="">
-                            <div class="player-page_song_card_info">
-                                <h4>EME</h4>
-                                <span>Nsqk</span>
-                            </div>
-                            <img class="player-page_song_card_menu" src="<?php echo BASE_ASSETS; ?>img/icons/menu_points.svg" alt="">
-                        </div>
-                        <div class="player-page_song_card">
-                            <img class="player-page_song_card_img" src="<?php echo BASE_ASSETS; ?>img/songs/eme.jpeg" alt="">
-                            <div class="player-page_song_card_info">
-                                <h4>EME</h4>
-                                <span>Nsqk</span>
-                            </div>
-                            <img class="player-page_song_card_menu" src="<?php echo BASE_ASSETS; ?>img/icons/menu_points.svg" alt="">
-                        </div>
-                        <div class="player-page_song_card">
-                            <img class="player-page_song_card_img" src="<?php echo BASE_ASSETS; ?>img/songs/eme.jpeg" alt="">
-                            <div class="player-page_song_card_info">
-                                <h4>EME</h4>
-                                <span>Nsqk</span>
-                            </div>
-                            <img class="player-page_song_card_menu" src="<?php echo BASE_ASSETS; ?>img/icons/menu_points.svg" alt="">
-                        </div>
-                    </div>
-                    <div class="player-page_songs_container">
-                        <div class="player-page_song_card">
-                            <img class="player-page_song_card_img" src="<?php echo BASE_ASSETS; ?>img/songs/eme.jpeg" alt="">
-                            <div class="player-page_song_card_info">
-                                <h4>EME</h4>
-                                <span>Nsqk</span>
-                            </div>
-                            <img class="player-page_song_card_menu" src="<?php echo BASE_ASSETS; ?>img/icons/menu_points.svg" alt="">
-                        </div>
-                        <div class="player-page_song_card">
-                            <img class="player-page_song_card_img" src="<?php echo BASE_ASSETS; ?>img/songs/eme.jpeg" alt="">
-                            <div class="player-page_song_card_info">
-                                <h4>EME</h4>
-                                <span>Nsqk</span>
-                            </div>
-                            <img class="player-page_song_card_menu" src="<?php echo BASE_ASSETS; ?>img/icons/menu_points.svg" alt="">
-                        </div>
-                        <div class="player-page_song_card">
-                            <img class="player-page_song_card_img" src="<?php echo BASE_ASSETS; ?>img/songs/eme.jpeg" alt="">
-                            <div class="player-page_song_card_info">
-                                <h4>EME</h4>
-                                <span>Nsqk</span>
-                            </div>
-                            <img class="player-page_song_card_menu" src="<?php echo BASE_ASSETS; ?>img/icons/menu_points.svg" alt="">
-                        </div>
-                    </div>
-                    <?php endforeach; ?>
+
+                    <!---------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+                <?php endforeach; ?>
                 </div>
             </div>
         </div>
 
         <!-- Controller -->
         <div class="player-controller">
+            <!--Reproductor de audio oculto-->
+            <audio id="audio" style="display: none;"></audio>
             <div class="player-controller_controls">
                 <div class="player-controller_wrapper">
                     <!-- Like and expand -->
@@ -449,6 +369,8 @@ include BASE_TEMPLATES . 'header.php';
     </div>
 </main>
 
-<script src="<?php echo BASE_ASSETS; ?>js/player.js"></script>
+<script src="<?php echo BASE_ASSETS; ?>js/player.js">
+    
+</script>
 
 </body>

@@ -12,10 +12,117 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     });
 
+    //Inicializar el reproductor de audio
+    const audioPlayer = document.getElementById('audio-player');
+    let currentSongInfo = {
+        title: "",
+        artist: "",
+        artwork: "",
+        duration: 0
+    };
+
+    //Añadir manejadores de eventos para las tarjetas de canciones
+    initializeSongCards();
+
     // Funcionalidad para los carruseles
     initializeCarousels();
     initVolumeControl();
     initProgressControl();
+
+    function initializeSongCards() {
+        const songCards = document.querySelectorAll('.player-page_song_card');
+
+        songCards.forEach((card) => {
+            card.addEventListener('click', () => {
+                //Obtener la informacion de la cancion
+                const songPath = this.getAttribute('data-song-path');
+                if(!songPath) {
+                    console.error('No song path found in data attribute');
+                    return;
+                }
+
+                const songTitle = card.querySelector('.player-page_song_card_info h4').textContent;
+                const artistName = card.querySelector('.player-page_song_card_info span').textContent;
+                const albumArtwork = card.querySelector('.player-page_song_card_img').src;
+
+                currentSongInfo = {
+                    title: songTitle,
+                    artist: artistName,
+                    artwork: albumArtwork,
+                    duration: 0 // Inicializar duración en 0
+                };
+
+                //Actualizar la interfaz de usuario
+                updatePlayerUI();
+
+                //Reproducir la canción
+                playSong(songPath);
+
+            });
+        });
+    }
+
+    function playSong(songPath) {
+        //Detener cualquier reproduccion actual
+        audioPlayer.pause();
+
+        //Establecer la nueva fuente de audio
+        audioPlayer.src = songPath; 
+
+        //Reproducir la nueva canción
+        audioPlayer.load();
+        audioPlayer.play()
+            .then(()=>{
+                console.log('Reproduccion iniciada');
+            })
+            .catch((error) => {
+                console.error('Error al reproducir la canción:', error);
+            });
+
+        audioPlayer.addEventListener('loadedmetadata', function() {
+            currentSongInfo.duration = audioPlayer.duration;
+            updateTimeDisplay();
+        });
+
+        //Actualizar la barra de progreso durante la reproduccion
+        audioPlayer.addEventListener('timeupdate', updateTimeDisplay)
+    }
+
+    function updatePlayerUI() {
+        // Actualizar la información visible en la interfaz
+        const songTitleElement = document.querySelector('.player-controller_song_info h3');
+        const artistNameElement = document.querySelector('.player-controller_song_info span');
+        const albumArtworkElement = document.querySelector('.player-controller_song_artwork');
+        
+        if (songTitleElement) songTitleElement.textContent = currentSongInfo.title;
+        if (artistNameElement) artistNameElement.textContent = currentSongInfo.artist;
+        if (albumArtworkElement) albumArtworkElement.src = currentSongInfo.artwork;
+    }
+
+    function updateTimeDisplay() {
+        const currentTimeDisplay = document.querySelector('.player-controller_time:first-of-type');
+        const totalTimeDisplay = document.querySelector('.player-controller_time:last-of-type');
+        const progressBar = document.querySelector('.player-controller_progress_bar');
+        const progressHandle = document.querySelector('.player-controller_progress_handle');
+        
+        if (currentTimeDisplay) {
+            currentTimeDisplay.textContent = formatTime(audioPlayer.currentTime);
+        }
+        
+        if (totalTimeDisplay) {
+            totalTimeDisplay.textContent = formatTime(audioPlayer.duration);
+        }
+        
+        const progressPercentage = (audioPlayer.currentTime / audioPlayer.duration) * 100 || 0;
+        
+        if (progressBar) {
+            progressBar.style.width = `${progressPercentage}%`;
+        }
+        
+        if (progressHandle) {
+            progressHandle.style.left = `${progressPercentage}%`;
+        }
+    }
 
     // Función para inicializar todos los carruseles
     function initializeCarousels() {
