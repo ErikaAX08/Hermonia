@@ -249,7 +249,7 @@ include BASE_TEMPLATES . 'header.php';
                     <!-- Song card -->
                     <div class="player-page_songs_container">
                         <?php foreach ($row as $song): ?>
-                            <div class="player-page_song_card" data-song-path="assets/songs/Mora-MEDIA_LUNA.mp3">
+                            <div class="player-page_song_card" data-song-path="<?php echo htmlspecialchars($song['song_path']); ?>">
                                 <img class="player-page_song_card_img" 
                                     src="<?php echo htmlspecialchars($song['album_artwork']); ?>" 
                                     alt="<?php echo htmlspecialchars($song['album_title']); ?>">
@@ -369,8 +369,122 @@ include BASE_TEMPLATES . 'header.php';
     </div>
 </main>
 
-<script src="<?php echo BASE_ASSETS; ?>js/player.js">
-    
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+    const audioPlayer = document.getElementById('audio'); // Elemento de audio
+    const songCards = document.querySelectorAll('.player-page_song_card'); // Seleccionar las tarjetas de canciones
+    const playButton = document.querySelector('.player-controller_button-play'); // Botón de play/pause
+    const progressBar = document.querySelector('.player-controller_progress_bar'); // Barra de progreso
+    const progressHandle = document.querySelector('.player-controller_progress_handle'); // Control de progreso
+    const progressContainer = document.querySelector('.player-controller_progress_container'); // Contenedor de progreso
+    const currentTimeDisplay = document.querySelector('.player-controller_time:first-child'); // Tiempo actual
+    const durationDisplay = document.querySelector('.player-controller_time:last-child'); // Duración total
+    const volumeSlider = document.querySelector('.player-controller_volume_bar'); // Barra de volumen
+    const volumeHandle = document.querySelector('.player-controller_volume_handle'); // Control de volumen
+
+    let isPlaying = false;
+
+    // Reproducir canción al hacer clic en una tarjeta
+    songCards.forEach((card) => {
+        card.addEventListener('click', function () {
+            const songPath = this.getAttribute('data-song-path'); // Obtener la ruta de la canción
+            if (!songPath) {
+                console.error('No se encontró la ruta de la canción.');
+                return;
+            }
+
+            // Configurar la canción en el reproductor de audio
+            audioPlayer.src = songPath;
+            audioPlayer.play()
+                .then(() => {
+                    isPlaying = true;
+                    updatePlayButton();
+                    console.log('Reproduciendo:', songPath);
+                })
+                .catch((error) => {
+                    console.error('Error al reproducir la canción:', error);
+                });
+
+            // Actualizar la interfaz del reproductor
+            const songTitle = this.querySelector('.player-page_song_card_info h4').textContent;
+            const artistName = this.querySelector('.player-page_song_card_info span').textContent;
+            const albumArtwork = this.querySelector('.player-page_song_card_img').src;
+
+            document.querySelector('.player-controller_song').textContent = songTitle;
+            document.querySelector('.player-controller_artist').textContent = artistName;
+            document.querySelector('.player-controller_cover img').src = albumArtwork;
+        });
+    });
+
+    // Actualizar el botón de play/pause
+    function updatePlayButton() {
+        if (isPlaying) {
+            playButton.innerHTML = `
+                <svg class="pause-icon" width="20" height="24" viewBox="0 0 20 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="2" y="2" width="6" height="20" fill="white"/>
+                    <rect x="12" y="2" width="6" height="20" fill="white"/>
+                </svg>`;
+        } else {
+            playButton.innerHTML = `
+                <svg width="20" height="24" viewBox="0 0 20 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M0 0V24L20 12L0 0Z" fill="white"/>
+                </svg>`;
+        }
+    }
+
+    // Controlar el botón de play/pause
+    playButton.addEventListener('click', function () {
+        if (isPlaying) {
+            audioPlayer.pause();
+            isPlaying = false;
+        } else {
+            audioPlayer.play();
+            isPlaying = true;
+        }
+        updatePlayButton();
+    });
+
+    // Actualizar la barra de progreso
+    audioPlayer.addEventListener('timeupdate', function () {
+        const progressPercent = (audioPlayer.currentTime / audioPlayer.duration) * 100;
+        progressBar.style.width = `${progressPercent}%`;
+        progressHandle.style.left = `${progressPercent}%`;
+
+        // Actualizar el tiempo actual y la duración
+        currentTimeDisplay.textContent = formatTime(audioPlayer.currentTime);
+        durationDisplay.textContent = formatTime(audioPlayer.duration);
+    });
+
+    // Formatear el tiempo en minutos y segundos
+    function formatTime(seconds) {
+        const minutes = Math.floor(seconds / 60);
+        const secs = Math.floor(seconds % 60);
+        return `${minutes}:${secs < 10 ? '0' : ''}${secs}`;
+    }
+
+    // Permitir al usuario buscar un punto específico en la canción
+    progressContainer.addEventListener('click', function (e) {
+        const rect = progressContainer.getBoundingClientRect();
+        const clickX = e.clientX - rect.left;
+        const width = rect.width;
+        const newTime = (clickX / width) * audioPlayer.duration;
+        audioPlayer.currentTime = newTime;
+    });
+
+    // Controlar el volumen
+    volumeSlider.addEventListener('click', function (e) {
+        const rect = volumeSlider.getBoundingClientRect();
+        const clickX = e.clientX - rect.left;
+        const width = rect.width;
+        const newVolume = clickX / width;
+        audioPlayer.volume = newVolume;
+        volumeHandle.style.left = `${newVolume * 100}%`;
+    });
+
+    // Inicializar el volumen
+    audioPlayer.volume = 0.5; // Volumen inicial al 50%
+    volumeHandle.style.left = '50%';
+});
 </script>
 
 </body>
