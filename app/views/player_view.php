@@ -347,7 +347,7 @@ include BASE_TEMPLATES . 'header.php';
 
                 <!-- Time progress -->
                 <div class="player-controller_time_progress">
-                    <span class="player-controller_time">1:16</span>
+                    <span class="player-controller_time">0:00</span>
                     <div class="player-controller_progress_container">
                         <div class="player-controller_progress_bar" style="width: 25%;"></div>
                         <div class="player-controller_progress_handle" style="left: 25%;"></div>
@@ -380,11 +380,16 @@ include BASE_TEMPLATES . 'header.php';
     const progressContainer = document.querySelector('.player-controller_progress_container'); // Contenedor de progreso
     const currentTimeDisplay = document.querySelector('.player-controller_time:first-child'); // Tiempo actual
     const durationDisplay = document.querySelector('.player-controller_time:last-child'); // Duración total
-    const volumeSlider = document.querySelector('.player-controller_volume_bar'); // Barra de volumen
-    const volumeHandle = document.querySelector('.player-controller_volume_handle'); // Control de volumen
+        // Elementos para Volumen
+        const volumeSlider = document.querySelector('.player-controller_volume_slider');
+        const volumeBar = document.querySelector('.player-controller_volume_bar');
+        const volumeHandle = document.querySelector('.player-controller_volume_handle');
 
-    let isPlaying = false;
 
+        let isPlaying = false;
+
+
+    //Codigo para el boton de repetir
         const repeatToggleButton = document.getElementById('repeat-button');
 
         if (repeatToggleButton && audioPlayer) {
@@ -517,20 +522,54 @@ include BASE_TEMPLATES . 'header.php';
     });
 
     // Controlar el volumen
-    volumeSlider.addEventListener('click', function (e) {
-        const rect = volumeSlider.getBoundingClientRect();
-        const clickX = e.clientX - rect.left;
-        const width = rect.width;
-        const newVolume = clickX / width;
-        audioPlayer.volume = newVolume;
-        volumeHandle.style.left = `${newVolume * 100}%`;
+        if (volumeSlider && volumeBar && volumeHandle && audioPlayer) {
+            let isDraggingVolume = false;
+
+            // Función para actualizar TODO (UI y audio) basado en el evento
+            const setVolumeFromEvent = (e) => {
+                const rect = volumeSlider.getBoundingClientRect();
+                let relativeX = e.clientX - rect.left;
+                let percentage = relativeX / rect.width;
+                percentage = Math.max(0, Math.min(1, percentage)); // Limitar entre 0 y 1
+
+                // Actualiza la UI (Barra y Handle)
+                volumeBar.style.width = `${percentage * 100}%`;
+                volumeHandle.style.left = `${percentage * 100}%`;
+
+                // Actualiza el volumen del audio
+                audioPlayer.volume = percentage;
+            };
+
+            // Eventos del Mouse
+            volumeSlider.addEventListener('mousedown', (e) => {
+                isDraggingVolume = true;
+                setVolumeFromEvent(e);
+                e.preventDefault(); // Evita seleccionar texto
+            });
+
+            document.addEventListener('mousemove', (e) => {
+                if (isDraggingVolume) {
+                    setVolumeFromEvent(e);
+                }
+            });
+
+            document.addEventListener('mouseup', () => {
+                isDraggingVolume = false;
+            });
+
+            // Evento para clics directos
+            volumeSlider.addEventListener('click', setVolumeFromEvent);
+
+            // --- Inicialización del Volumen al cargar la página ---
+            const initialVolume = 0.5; // 50%
+            audioPlayer.volume = initialVolume; // Poner volumen real
+            volumeBar.style.width = `${initialVolume * 100}%`; // Poner barra visual
+            volumeHandle.style.left = `${initialVolume * 100}%`; // Poner handle visual
+        } else {
+            console.error("Error: Faltan elementos para el control de volumen.");
+            if (!volumeSlider) console.error("Falta: .player-controller_volume_slider");
+        }
     });
-
-    // Inicializar el volumen
-    audioPlayer.volume = 0.5; // Volumen inicial al 50%
-    volumeHandle.style.left = '50%';
-});
-
 </script>
 
 </body>

@@ -187,7 +187,6 @@ document.addEventListener("DOMContentLoaded", function() {
         const volumeSlider = document.querySelector('.player-controller_volume_slider'); // Contenedor clickeable/arrastrable
         const volumeBar = document.querySelector('.player-controller_volume_bar');    // Barra de color
         const volumeHandle = document.querySelector('.player-controller_volume_handle'); // Círculo/Handle
-        // const audioPlayer = document.getElementById('audio'); // O 'audio-player' - ¡VERIFICA ID!
 
         if (!volumeSlider || !volumeBar || !volumeHandle || !audioPlayer) {
             console.error("Error: Faltan elementos para el control de volumen o el audio player.");
