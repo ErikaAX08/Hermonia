@@ -21,7 +21,6 @@ class ConexionBD {
             $dsn = "mysql:host=$this->host;port=$this->port;dbname=$this->db;charset=$this->charset";
             $this->pdo = new PDO($dsn, $this->user, $this->pass);
             $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            echo "Conexión exitosa a la base de datos";
         } catch (PDOException $e) {
             echo 'Connection failed: ' . $e->getMessage();
         }
