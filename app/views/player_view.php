@@ -385,35 +385,22 @@ include BASE_TEMPLATES . 'header.php';
 
     let isPlaying = false;
 
-        // --- CÓDIGO CORREGIDO PARA BOTÓN DE REPETIR (ID: repeat-button) ---
+        const repeatToggleButton = document.getElementById('repeat-button');
 
-// Asegúrate de que este código esté DENTRO de tu document.addEventListener("DOMContentLoaded", function() { ... });
-
-        const repeatToggleButton = document.getElementById('repeat-button'); // <== ¡Usa el ID correcto!
-// const audioPlayer = document.getElementById('audio'); // <-- Revisa si es 'audio' o 'audio-player' en tu HTML
-
-// Verifica que el botón y el reproductor existan
         if (repeatToggleButton && audioPlayer) {
 
-            // Guarda el SVG del icono INACTIVO (bordes). ¡Lo lee directamente del HTML inicial del botón!
             const repeatInactiveSVG = repeatToggleButton.innerHTML;
 
-            // ----- ¡¡¡ IMPORTANTE: PEGA AQUÍ EL CÓDIGO SVG DE TU ICONO REPETIR ACTIVADO (RELLENO) !!! -----
-            // Este es el icono que se mostrará cuando la repetición esté ENCENDIDA.
-            // Reemplaza todo el contenido entre las comillas invertidas (` `) con tu SVG de repetir CON RELLENO.
             const repeatActiveSVG = `
         <svg width="19" height="18" viewBox="0 0 19 18" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M17.5 6.50017C17.8729 6.50019 18.2324 6.63909 18.5084 6.88979C18.7844 7.14049 18.9572 7.48501 18.993 7.85617L19 8.00017V12.0002C19 13.1569 18.5545 14.2693 17.7561 15.1063C16.9576 15.9433 15.8675 16.4407 14.712 16.4952L14.5 16.5002H6.06L6.04 16.8122L6.029 16.9522C5.973 17.6712 5.28 18.1222 4.698 17.8172L4.384 17.6492L4.016 17.4402L3.813 17.3212L3.374 17.0522C3.06129 16.8547 2.75385 16.6489 2.452 16.4352L2.067 16.1552L1.744 15.9102L1.607 15.8032C1.118 15.4132 1.137 14.6082 1.657 14.1972L1.793 14.0902L2.113 13.8482L2.493 13.5732L2.931 13.2722C3.16604 13.1153 3.40409 12.9629 3.645 12.8152L4.071 12.5602L4.446 12.3492L4.762 12.1792C5.339 11.8792 5.969 12.2642 6.024 12.9352L6.062 13.5002H14.5C14.8729 13.5002 15.2324 13.3613 15.5084 13.1106C15.7844 12.8599 15.9572 12.5153 15.993 12.1442L16 12.0002V8.00017C16 7.60234 16.158 7.22081 16.4393 6.93951C16.7206 6.6582 17.1022 6.50017 17.5 6.50017ZM14.302 0.18317L14.616 0.351169L14.984 0.560169C15.0507 0.597503 15.1183 0.637169 15.187 0.679169L15.626 0.948169C15.9387 1.14568 16.2462 1.35142 16.548 1.56517L16.933 1.84517L17.256 2.09017L17.393 2.19717C17.882 2.58717 17.863 3.39217 17.343 3.80317L17.207 3.91017L16.887 4.15217L16.507 4.42717C16.131 4.69181 15.7468 4.9446 15.355 5.18517L14.929 5.44017L14.554 5.65117L14.238 5.82117C13.661 6.12117 13.031 5.73617 12.977 5.06517L12.937 4.50017H4.5C4.10218 4.50017 3.72064 4.6582 3.43934 4.93951C3.15804 5.22081 3 5.60234 3 6.00017V10.0002C3 10.398 2.84196 10.7795 2.56066 11.0608C2.27936 11.3421 1.89782 11.5002 1.5 11.5002C1.10218 11.5002 0.720644 11.3421 0.43934 11.0608C0.158035 10.7795 0 10.398 0 10.0002V6.00017C0 4.80669 0.474106 3.6621 1.31802 2.81819C2.16193 1.97428 3.30653 1.50017 4.5 1.50017H12.94L12.971 1.04817C13.027 0.329169 13.72 -0.12183 14.302 0.18317Z"
                                       fill="#261551"/>
                             </svg>
     `;
-            // ----- FIN DEL SVG ACTIVADO -----
-
 
             let isRepeatOn = false; // Estado inicial: Repetir está desactivado
 
             // --- Configuración Inicial ---
-            // No es necesario cambiar el innerHTML inicial porque ya carga con el inactivo desde el HTML.
             audioPlayer.loop = false;
             repeatToggleButton.classList.remove('repeat-active'); // Asegura que no tenga la clase activa
 
