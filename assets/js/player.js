@@ -1,4 +1,6 @@
 document.addEventListener("DOMContentLoaded", function() {
+
+    console.log("¡DOMContentLoaded se ha disparado!");
     // Manejo de los elementos del menú (código existente)
     const menuItems = document.querySelectorAll('.player-menu_item');
     menuItems.forEach(function(menuItem) {
@@ -13,7 +15,7 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 
     //Inicializar el reproductor de audio
-    const audioPlayer = document.getElementById('audio-player');
+    const audioPlayer = document.getElementById('audio');
     let currentSongInfo = {
         title: "",
         artist: "",
@@ -28,6 +30,8 @@ document.addEventListener("DOMContentLoaded", function() {
     initializeCarousels();
     initVolumeControl();
     initProgressControl();
+
+
 
     function initializeSongCards() {
         const songCards = document.querySelectorAll('.player-page_song_card');
