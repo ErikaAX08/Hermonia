@@ -1,4 +1,6 @@
 document.addEventListener("DOMContentLoaded", function() {
+
+    console.log("¡DOMContentLoaded se ha disparado!");
     // Manejo de los elementos del menú (código existente)
     const menuItems = document.querySelectorAll('.player-menu_item');
     menuItems.forEach(function(menuItem) {
@@ -13,7 +15,7 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 
     //Inicializar el reproductor de audio
-    const audioPlayer = document.getElementById('audio-player');
+    const audioPlayer = document.getElementById('audio');
     let currentSongInfo = {
         title: "",
         artist: "",
@@ -28,6 +30,8 @@ document.addEventListener("DOMContentLoaded", function() {
     initializeCarousels();
     initVolumeControl();
     initProgressControl();
+
+
 
     function initializeSongCards() {
         const songCards = document.querySelectorAll('.player-page_song_card');
@@ -179,50 +183,64 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     }
 
-    function initVolumeControl() {
-        const volumeSlider = document.querySelector('.player-controller_volume_slider');
-        const volumeBar = document.querySelector('.player-controller_volume_bar');
-        const volumeHandle = document.querySelector('.player-controller_volume_handle');
+    function initVolumeControl() { // O pon este código donde configuras el volumen
+        const volumeSlider = document.querySelector('.player-controller_volume_slider'); // Contenedor clickeable/arrastrable
+        const volumeBar = document.querySelector('.player-controller_volume_bar');    // Barra de color
+        const volumeHandle = document.querySelector('.player-controller_volume_handle'); // Círculo/Handle
 
-        if (!volumeSlider || !volumeBar || !volumeHandle) return;
-
-        let isDragging = false;
-
-        volumeSlider.addEventListener('mousedown', startDrag);
-        document.addEventListener('mousemove', drag);
-        document.addEventListener('mouseup', endDrag);
-        volumeSlider.addEventListener('click', setVolume);
-
-        function startDrag(e) {
-            isDragging = true;
-            setVolumeFromEvent(e);
+        if (!volumeSlider || !volumeBar || !volumeHandle || !audioPlayer) {
+            console.error("Error: Faltan elementos para el control de volumen o el audio player.");
+            return; // Salir si falta algo
         }
 
-        function drag(e) {
-            if (isDragging) {
-                setVolumeFromEvent(e);
-            }
-        }
+        let isDraggingVolume = false;
 
-        function endDrag() {
-            isDragging = false;
-        }
-
-        function setVolume(e) {
-            setVolumeFromEvent(e);
-        }
-
-        function setVolumeFromEvent(e) {
+        // Función para actualizar TODO (UI y audio) basado en el evento
+        const setVolumeFromEvent = (e) => {
             const rect = volumeSlider.getBoundingClientRect();
-            let percentage = (e.clientX - rect.left) / rect.width;
+            // Calcula la posición X del clic/arrastre relativo al inicio de la barra
+            let relativeX = e.clientX - rect.left;
+            let percentage = relativeX / rect.width;
+
+            // Asegura que el porcentaje esté entre 0 y 1
             percentage = Math.max(0, Math.min(1, percentage));
 
+            // Actualiza la UI (Barra y Handle)
             volumeBar.style.width = `${percentage * 100}%`;
             volumeHandle.style.left = `${percentage * 100}%`;
 
-            console.log(`Volume set to: ${Math.round(percentage * 100)}%`);
-        }
+            audioPlayer.volume = percentage;
+        };
+
+        // Eventos del Mouse
+        volumeSlider.addEventListener('mousedown', (e) => {
+            isDraggingVolume = true;
+            setVolumeFromEvent(e); // Aplica volumen al empezar a arrastrar
+            e.preventDefault(); // Evita seleccionar texto mientras arrastras
+        });
+
+        document.addEventListener('mousemove', (e) => {
+            if (isDraggingVolume) {
+                setVolumeFromEvent(e); // Aplica volumen mientras se arrastra
+            }
+        });
+
+        document.addEventListener('mouseup', () => {
+            // Siempre detiene el arrastre cuando se suelta el botón en cualquier lugar
+            isDraggingVolume = false;
+        });
+
+        // Evento para clics directos sobre la barra (sin arrastrar)
+        volumeSlider.addEventListener('click', setVolumeFromEvent);
+
+        // --- Inicialización del Volumen al cargar la página ---
+        const initialVolume = 0.5; // 50%
+        audioPlayer.volume = initialVolume;
+        volumeBar.style.width = `${initialVolume * 100}%`;
+        volumeHandle.style.left = `${initialVolume * 100}%`;
+
     }
+
 
     function initProgressControl() {
         const progressContainer = document.querySelector('.player-controller_progress_container');
