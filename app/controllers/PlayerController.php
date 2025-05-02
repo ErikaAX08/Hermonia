@@ -16,7 +16,8 @@ class PlayerController extends Controller {
         session_start();
 
         if (!isset($_SESSION['user_id'])) {
-            header('Location: ' . BASE_URL . 'player');
+            // Cambiar esta línea para redirigir a home en vez de player
+            header('Location: ' . BASE_URL . 'home');
             exit;
         }
 
