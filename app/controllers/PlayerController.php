@@ -73,7 +73,7 @@ class PlayerController extends Controller {
         }
 
          // Completamos la consulta con el orden aleatorio y límite
-        $sqlSongs .= " ORDER BY RAND() LIMIT 5";  
+        $sqlSongs .= " ORDER BY RAND() LIMIT 10";
 
         $stmtSongs = $this->db->pdo->query($sqlSongs);
         $songs = $stmtSongs->fetchAll();
@@ -97,7 +97,7 @@ class PlayerController extends Controller {
                     INNER JOIN albums ON canciones.album_id = albums.id
                     INNER JOIN artists ON canciones.artista_id = artists.id
                     ORDER BY RAND()
-                    LIMIT 5
+                    LIMIT 10
                 ";
                 $stmtSongs = $this->db->pdo->query($sqlSongs);
                 $songs = $stmtSongs->fetchAll();
