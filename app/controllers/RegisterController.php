@@ -12,45 +12,86 @@ class RegisterController
     {
         $this->db = new ConexionBD();
 
+        // Iniciar sesión si no está iniciada (para poder usar $_SESSION para mensajes de error)
+        if (session_status() == PHP_SESSION_NONE) {
+            session_start();
+        }
+
+        // Limpiar errores previos de registro de la sesión
+        unset($_SESSION['error_register']);
+        unset($_SESSION['success_register']); // Si quieres manejar mensajes de éxito también
+
         if (!empty($_POST["btnRegister"])) {
             if ($_SERVER["REQUEST_METHOD"] == "POST") {
-                // Recuperar los datos del formulario
-                $email = $_POST["emailRegister"];
-                $password = $_POST["passwordRegister"]; // Recuperar la contraseña original
-                $nombre = $_POST["nombreRegister"];
-                $apellidos = $_POST["apellidosRegister"];
-                $fechaNacimiento = $_POST["fechaRegister"];
-                $pais = $_POST["paisRegister"];
-                $suscripcion = $_POST["suscripcionRegister"] ?? 'free'; // Valor predeterminado: 'free'
+                $email = trim($_POST["emailRegister"] ?? '');
+                $password = $_POST["passwordRegister"] ?? ''; 
+                $nombre = trim($_POST["nombreRegister"] ?? '');
+                $apellidos = trim($_POST["apellidosRegister"] ?? '');
+                $fechaNacimiento = $_POST["fechaRegister"] ?? '';
+                $pais = trim($_POST["paisRegister"] ?? '');
+                $suscripcion = $_POST["suscripcionRegister"] ?? 'free';
 
-                // Validar la contraseña antes de encriptarla
-                if (!preg_match('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,}$/', $password)) {
-                    echo "Error: La contraseña debe tener al menos 8 caracteres, incluir letras mayúsculas, minúsculas y al menos un número.";
+                
+                if (empty($email) || empty($password) || empty($nombre) || empty($apellidos) || empty($fechaNacimiento) || empty($pais)) {
+                    $_SESSION['error_register'] = "Todos los campos son obligatorios.";
+                    header("Location: " . BASE_URL); // Redirige a la página con el formulario
                     exit;
                 }
 
-                // Encriptar la contraseña después de validarla
+                // --- Validar formato de email ---
+                if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                    $_SESSION['error_register'] = "El formato del correo electrónico no es válido.";
+                    header("Location: " . BASE_URL);
+                    exit;
+                }
+
+                // --- Validar la contraseña ---
+                $passwordRegex = '/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\dñÑÁÉÍÓÚáéíóúüÜ@$!%*?&._\-]{8,}$/u';
+                if (!preg_match($passwordRegex, $password)) {
+                    $_SESSION['error_register'] = "La contraseña debe tener al menos 8 caracteres, mayúsculas (A-Z), minúsculas (a-z), un número (0-9) y puede contener ñ, acentos y ciertos símbolos.";
+                    header("Location: " . BASE_URL);
+                    exit;
+                }
+
+                // --- Encriptar la contraseña después de validarla ---
                 $passwordHash = password_hash($password, PASSWORD_BCRYPT);
 
-                // Validar la fecha de nacimiento
+                // --- Validar la fecha de nacimiento ---
                 $fechaNacimientoDate = DateTime::createFromFormat('Y-m-d', $fechaNacimiento);
-                $fechaActual = new DateTime();
-                $edad = $fechaActual->diff($fechaNacimientoDate)->y;
+                if (!$fechaNacimientoDate || $fechaNacimientoDate->format('Y-m-d') !== $fechaNacimiento) { // Chequeo extra de validez de fecha
+                    $_SESSION['error_register'] = "La fecha de nacimiento no es válida.";
+                    header("Location: " . BASE_URL);
+                    exit;
+                }
+                $fechaActualObj = new DateTime(); // Renombrado para evitar confusión con $fechaActual de registro
+                $edad = $fechaActualObj->diff($fechaNacimientoDate)->y;
 
-                if (!$fechaNacimientoDate || $edad < 13) {
-                    echo "Error: Debes tener al menos 13 años para registrarte.";
+                if ($edad < 13) {
+                    $_SESSION['error_register'] = "Debes tener al menos 13 años para registrarte.";
+                    header("Location: " . BASE_URL);
                     exit;
                 }
 
                 // Generar el username
                 $usernameBase = strtolower(trim($nombre) . '.' . trim($apellidos));
-                $usernameBase = preg_replace('/[^a-z0-9.]/', '', $usernameBase);
+                $usernameBase = preg_replace('/[^a-z0-9.]/', '', $usernameBase); // Solo letras minúsculas, números y puntos
+                $usernameBase = preg_replace('/\.+/', '.', $usernameBase); // Reemplazar múltiples puntos con uno solo
                 $username = substr($usernameBase, 0, 25);
 
-                // Otros datos
                 $fechaActual = date('Y-m-d H:i:s'); // Fecha de registro
 
                 try {
+                    // Verificar si el email ya existe
+                    $sqlCheck = "SELECT id FROM usuarios WHERE email = :email";
+                    $stmtCheck = $this->db->pdo->prepare($sqlCheck);
+                    $stmtCheck->bindParam(':email', $email);
+                    $stmtCheck->execute();
+                    if ($stmtCheck->fetch()) {
+                        $_SESSION['error_register'] = "Este correo electrónico ya está registrado.";
+                        header("Location: " . BASE_URL);
+                        exit;
+                    }
+
                     // Insertar los datos en la base de datos
                     $sql = "INSERT INTO usuarios 
                             (nombre, email, fecha_registro, username, first_name, last_name, password, sign_up_date, fecha_nacimiento, pais, suscripcion) 
@@ -58,37 +99,50 @@ class RegisterController
                             (:nombre, :email, :fecha_registro, :username, :first_name, :last_name, :password, :sign_up_date, :fecha_nacimiento, :pais, :suscripcion)";
                     $stmt = $this->db->pdo->prepare($sql);
 
-                    // Vincular los parámetros
-                    $stmt->bindParam(':nombre', $nombre);
+                    $stmt->bindParam(':nombre', $nombre); // Podrías considerar si este es el nombre completo o solo el 'nombre de pila'
                     $stmt->bindParam(':email', $email);
                     $stmt->bindParam(':fecha_registro', $fechaActual);
                     $stmt->bindParam(':username', $username);
-                    $stmt->bindParam(':first_name', $nombre);
+                    $stmt->bindParam(':first_name', $nombre); // Asumiendo que $nombre es el nombre de pila
                     $stmt->bindParam(':last_name', $apellidos);
-                    $stmt->bindParam(':password', $passwordHash); // Usar la contraseña encriptada
-                    $stmt->bindParam(':sign_up_date', $fechaActual);
+                    $stmt->bindParam(':password', $passwordHash);
+                    $stmt->bindParam(':sign_up_date', $fechaActual); // Es igual a fecha_registro, ¿son necesarias ambas?
                     $stmt->bindParam(':fecha_nacimiento', $fechaNacimiento);
                     $stmt->bindParam(':pais', $pais);
                     $stmt->bindParam(':suscripcion', $suscripcion);
 
-                    // Ejecutar la consulta
                     if ($stmt->execute()) {
-                        header("Location: " . BASE_URL . "logged");
+                        
+                         $_SESSION['user_id'] = $this->db->pdo->lastInsertId();
+                         $_SESSION['user_email'] = $email;
+                        $_SESSION['user_name'] = $nombre;
+                        session_regenerate_id(true);
+                        
+                        $_SESSION['success_register'] = "¡Registro exitoso! Ahora puedes iniciar sesión.";
+                        $_SESSION['success_register_js_trigger'] = true; // <--- AÑADIR ESTO
+                        header("Location: " . BASE_URL); // Redirige a la home para que vean el mensaje de éxito y/o el modal de login
                         exit;
                     } else {
-                        echo "Error: No se pudo registrar el usuario. Detalles: " . implode(", ", $stmt->errorInfo());
+                        $_SESSION['error_register'] = "Error: No se pudo registrar el usuario. Inténtalo más tarde.";
+                        $_SESSION['error_register_js_trigger'] = true; 
+                        header("Location: " . BASE_URL);
+                        exit;
                     }
                 } catch (\PDOException $e) {
-                    echo "Error de base de datos: " . $e->getMessage();
+                    $_SESSION['error_register'] = "Error de base de datos. Inténtalo más tarde.";
+                    // Loguear el error real: error_log("PDOException en registro: " . $e->getMessage());
+                    header("Location: " . BASE_URL);
+                    exit;
                 }
             } else {
-                echo "Error: El formulario no se envió correctamente.";
+                 $_SESSION['error_register'] = "Error: El formulario no se envió correctamente.";
+                 header("Location: " . BASE_URL);
+                 exit;
             }
         } else {
-            echo "El parámetro btnRegister no está presente. Datos recibidos: ";
-            echo "<pre>";
-            print_r($_POST);
-            echo "</pre>";
+    
+            header("Location: " . BASE_URL);
+            exit;
         }
     }
 }

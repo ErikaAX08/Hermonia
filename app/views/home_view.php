@@ -120,6 +120,26 @@ if (defined('BASE_TEMPLATES')) {
         <h2 class="home-modal_title">Crear cuenta de Hermonia</h2>
     </div>
 
+     <?php
+    // Mostrar mensaje de ÉXITO de registro si existe (desde RegisterController)
+    if (isset($_SESSION['success_register']) && !empty($_SESSION['success_register'])):
+    ?>
+        <p class="home-modal_message home-modal_success_message">
+            <?php echo htmlspecialchars($_SESSION['success_register']); ?>
+        </p>
+        <?php unset($_SESSION['success_register']); // Limpiar el mensaje después de mostrarlo ?>
+    <?php endif; ?>
+
+    <?php
+    // Mostrar mensaje de ERROR de registro si existe (desde RegisterController)
+    if (isset($_SESSION['error_register']) && !empty($_SESSION['error_register'])):
+    ?>
+        <p class="home-modal_message home-modal_error_message">
+            <?php echo htmlspecialchars($_SESSION['error_register']); ?>
+        </p>
+        <?php unset($_SESSION['error_register']); // Limpiar el mensaje después de mostrarlo ?>
+    <?php endif; ?>
+
     <div class="home-modal_register_form_container">
         <form class="home-modal_form" id="registerForm" method="POST" action="<?php echo defined('BASE_URL') ? BASE_URL : ''; ?>register">
             <div class="home-modal_form_field float-label">
@@ -220,80 +240,124 @@ if (defined('BASE_TEMPLATES')) {
 
 <script src="<?php echo defined('BASE_ASSETS') ? BASE_ASSETS : ''; ?>js/home.js"></script>
 <script>
-// Script de validación para el formulario de registro
-// Es buena práctica verificar si el formulario existe antes de añadir el listener
-var registerFormElement = document.getElementById("registerForm");
-var passwordRegisterElement = document.getElementById("passwordRegister"); // Definir fuera para acceso global en este script
+/document.addEventListener('DOMContentLoaded', function() {
+    // Selectores de Modales y Botones de Apertura
+    const loginModal = document.getElementById('home-modal_login');
+    const registerModal = document.getElementById('home-modal_register');
+    const openLoginButton = document.getElementById('home-button_login_open');
+    const openRegisterButton = document.getElementById('home-button_register_open');
 
-if (registerFormElement && passwordRegisterElement) {
-    registerFormElement.addEventListener("submit", function (event) {
-        console.log("Evento submit de registro activado"); // Depuración
-        const password = passwordRegisterElement.value.trim(); // Usar la variable definida arriba
-        const fechaNacimientoInput = document.getElementById("fechaRegister"); // Obtener el input de fecha
+    // Selectores de Botones "Volver" dentro de los Modales
+    const backLoginButton = document.querySelector('.home-modal_button_back_login');
+    const backRegisterButton = document.querySelector('.home-modal_button_back_register');
 
-        if (!fechaNacimientoInput) {
-            console.error("Elemento fechaRegister no encontrado");
-            event.preventDefault(); // Prevenir envío si falta el campo
-            return;
-        }
-        const fechaNacimiento = fechaNacimientoInput.value;
-
-        // Validar la contraseña
-        const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,}$/;
-
-        if (!passwordRegex.test(password)) {
-            console.log("Contraseña no válida para registro"); // Depuración
-            event.preventDefault(); 
-            alert(
-                "La contraseña debe tener al menos 8 caracteres, incluir letras mayúsculas y minúsculas, y al menos un número."
-            );
-            passwordRegisterElement.focus(); 
-            return; 
-        }
-
-        // Validar la fecha de nacimiento
-        const fechaNacimientoDate = new Date(fechaNacimiento);
-        const fechaActual = new Date();
-        
-        // Corregir cálculo de edad
-        let edad = fechaActual.getFullYear() - fechaNacimientoDate.getFullYear();
-        const mesActual = fechaActual.getMonth();
-        const diaActual = fechaActual.getDate();
-        const mesNacimiento = fechaNacimientoDate.getMonth();
-        const diaNacimiento = fechaNacimientoDate.getDate();
-
-        if (mesActual < mesNacimiento || (mesActual === mesNacimiento && diaActual < diaNacimiento)) {
-            edad--;
-        }
-
-        if (isNaN(fechaNacimientoDate.getTime()) || fechaNacimiento === "" || edad < 13) {
-            console.log("Fecha de nacimiento no válida o menor de 13 años"); // Depuración
-            event.preventDefault(); 
-            alert("Debes tener al menos 13 años para registrarte y la fecha debe ser válida.");
-            fechaNacimientoInput.focus(); 
-            return; 
-        }
-
-        console.log("Formulario de registro válido, procediendo al envío."); // Depuración
-    });
-} else {
-    if (!registerFormElement) console.log("Elemento registerForm no encontrado en el DOM.");
-    if (!passwordRegisterElement) console.log("Elemento passwordRegister no encontrado en el DOM.");
-}
-
-<?php
-
-if (isset($error_login) && !empty($error_login)): 
-?>
-document.addEventListener('DOMContentLoaded', function() {
-    var loginModal = document.getElementById('home-modal_login');
-    if (loginModal) {
-        loginModal.style.display = 'block'; 
-    } else {
-        console.log("Modal de login (home-modal_login) no encontrado en el DOM para mostrar error.");
+    // --- Funciones para manejar visibilidad de modales ---
+    function showModal(modalElement) {
+        if (modalElement) modalElement.style.display = 'block';
     }
+    function hideModal(modalElement) {
+        if (modalElement) modalElement.style.display = 'none';
+    }
+
+    // --- Event Listeners para abrir modales ---
+    if (openLoginButton) {
+        openLoginButton.addEventListener('click', function() {
+            hideModal(registerModal); // Oculta el de registro si está abierto
+            showModal(loginModal);
+        });
+    }
+    if (openRegisterButton) {
+        openRegisterButton.addEventListener('click', function() {
+            hideModal(loginModal); // Oculta el de login si está abierto
+            showModal(registerModal);
+        });
+    }
+
+    // --- Event Listeners para botones "Volver" ---
+    if (backLoginButton) {
+        backLoginButton.addEventListener('click', function() {
+            hideModal(loginModal);
+        });
+    }
+    if (backRegisterButton) {
+        backRegisterButton.addEventListener('click', function() {
+            hideModal(registerModal);
+        });
+    }
+
+    // --- Validación del Formulario de Registro (Cliente) ---
+    const registerForm = document.getElementById("registerForm");
+    if (registerForm) {
+        const passwordRegisterInput = document.getElementById("passwordRegister");
+        const fechaRegisterInput = document.getElementById("fechaRegister");
+
+        registerForm.addEventListener("submit", function (event) {
+            console.log("Validando formulario de registro (cliente)...");
+            
+            if (!passwordRegisterInput || !fechaRegisterInput) {
+                console.error("Campos de contraseña o fecha no encontrados para validación.");
+                event.preventDefault();
+                return;
+            }
+            const password = passwordRegisterInput.value; // No usar trim() en contraseñas
+            const fechaNacimiento = fechaRegisterInput.value;
+
+            // Validar la contraseña
+            const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\dñÑÁÉÍÓÚáéíóúüÜ@$!%*?&._\-]{8,}$/;
+            if (!passwordRegex.test(password)) {
+                console.log("Contraseña no válida (cliente)");
+                event.preventDefault();
+                alert("La contraseña debe tener al menos 8 caracteres, incluir mayúsculas (A-Z), minúsculas (a-z), un número (0-9) y puede contener ñ, acentos y algunos símbolos como @$!%*?&._-");
+                passwordRegisterInput.focus();
+                return;
+            }
+
+            // Validar la fecha de nacimiento (mayor de 13 años)
+            const fechaNacimientoDate = new Date(fechaNacimiento);
+            const fechaActual = new Date();
+            let edad = fechaActual.getFullYear() - fechaNacimientoDate.getFullYear();
+            const mesActual = fechaActual.getMonth();
+            const diaActual = fechaActual.getDate();
+            const mesNacimiento = fechaNacimientoDate.getMonth();
+            const diaNacimiento = fechaNacimientoDate.getDate();
+
+            if (mesActual < mesNacimiento || (mesActual === mesNacimiento && diaActual < diaNacimiento)) {
+                edad--;
+            }
+
+            if (isNaN(fechaNacimientoDate.getTime()) || fechaNacimiento === "" || edad < 13) {
+                console.log("Fecha de nacimiento no válida o menor de 13 años (cliente)");
+                event.preventDefault();
+                alert("Debes tener al menos 13 años para registrarte y la fecha debe ser válida.");
+                fechaRegisterInput.focus();
+                return;
+            }
+            console.log("Validación del cliente superada.");
+        });
+    }
+
+    // --- Lógica para mostrar modales basados en errores/éxito de PHP ---
+    <?php if (isset($error_login) && !empty($error_login)): ?>
+        console.log("PHP: error_login detectado, mostrando modal de login.");
+        hideModal(registerModal);
+        showModal(loginModal);
+    <?php endif; ?>
+
+    <?php if (isset($_SESSION['error_register_js_trigger']) && $_SESSION['error_register_js_trigger']): ?>
+        console.log("PHP: error_register_js_trigger detectado, mostrando modal de registro.");
+        hideModal(loginModal);
+        showModal(registerModal);
+        <?php unset($_SESSION['error_register_js_trigger']); ?>
+    <?php endif; ?>
+
+    <?php if (isset($_SESSION['success_register_js_trigger']) && $_SESSION['success_register_js_trigger']): ?>
+        console.log("PHP: success_register_js_trigger detectado, mostrando modal de registro (para mensaje de éxito).");
+        // O podrías mostrar el modal de login: hideModal(registerModal); showModal(loginModal);
+        hideModal(loginModal);
+        showModal(registerModal); 
+        <?php unset($_SESSION['success_register_js_trigger']); ?>
+    <?php endif; ?>
 });
-<?php endif; ?>
 </script>
 
 </body>
