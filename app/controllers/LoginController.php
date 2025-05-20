@@ -15,7 +15,7 @@ class LoginController extends Controller
         $this->db = new ConexionBD();
     }
 
-    public function login() // Este método maneja el POST del formulario de login
+    public function login() 
     {
         if (session_status() == PHP_SESSION_NONE) {
             session_start();
@@ -63,21 +63,16 @@ class LoginController extends Controller
                     $error_message = 'Ocurrió un problema. Por favor, intenta más tarde.';
                 }
             }
-            // --- CAMBIO AQUÍ ---
-            // Mostrar la vista 'home' nuevamente con el mensaje de error si existe
-            $this->view('home', ['error_login' => $error_message]); // Usamos 'error_login' para no colisionar con otros posibles errores en home
+            
+            $this->view('home', ['error_login' => $error_message]);
             return; 
         }
 
-        // --- CAMBIO AQUÍ ---
-        // Si no es POST o si es la primera carga, mostrar formulario de login (que está en 'home')
-        // Si se llega aquí por GET a /login/login (o la ruta que lleve a este método)
-        // también se mostrará 'home'. Considera si esto es lo que quieres o si
-        // el método 'index' es el único que debe mostrar el login inicialmente.
-        $this->view('home', ['error_login' => null]); // Sin error al cargar por primera vez vía este método
+   
+        $this->view('home', ['error_login' => null]); 
     }
 
-    public function index() // Este método usualmente maneja la carga inicial de la página de login (GET /login)
+    public function index() 
     {
         if (session_status() == PHP_SESSION_NONE) {
             session_start();
@@ -88,9 +83,8 @@ class LoginController extends Controller
             exit;
         }
 
-        // --- CAMBIO AQUÍ ---
-        // Mostrar la vista 'home', que contiene el modal de login
-        $this->view('home', ['error_login' => null]); // Pasamos null o un array vacío si no hay error que mostrar inicialmente
+     
+        $this->view('home', ['error_login' => null]); 
     }
 
     public function logout()
@@ -111,7 +105,7 @@ class LoginController extends Controller
 
         session_destroy();
 
-        header("Location: " . BASE_URL . "login"); // Asumo que /login te lleva a LoginController@index
+        header("Location: " . BASE_URL . "login"); 
         exit;
     }
 }

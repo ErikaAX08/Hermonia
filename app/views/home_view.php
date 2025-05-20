@@ -1,25 +1,15 @@
 <?php
-// home_view.php
 
-// Asumo que BASE_TEMPLATES y BASE_ASSETS están definidos correctamente en tu configuración.
-// Ejemplo: define('BASE_TEMPLATES', __DIR__ . '/../templates/');
-// Ejemplo: define('BASE_ASSETS', '/Hermonia/assets/'); // O la ruta base de tus assets
 
-$additional_styles = "views/home.css"; // Asegúrate que esta ruta sea correcta desde donde se incluye header.php
-// Si header.php está en BASE_TEMPLATES, la ruta podría necesitar ajuste o ser absoluta/relativa a BASE_ASSETS
-// Por ejemplo: $additional_styles = BASE_ASSETS . "css/home.css";
+$additional_styles = "views/home.css"; 
 
 if (defined('BASE_TEMPLATES')) {
     include BASE_TEMPLATES . 'header.php';
 } else {
-    // Manejo de error o fallback si BASE_TEMPLATES no está definido
+  
     echo "Error: BASE_TEMPLATES no está definido.";
-    // Podrías incluir un header genérico o detener la ejecución
+    
 }
-
-
-// No necesitas 'use app\controllers\RegisterController;' aquí en la vista.
-// La lógica del controlador se maneja en los archivos del controlador.
 ?>
 
 <body class="home-body">
@@ -291,21 +281,14 @@ if (registerFormElement && passwordRegisterElement) {
     if (!passwordRegisterElement) console.log("Elemento passwordRegister no encontrado en el DOM.");
 }
 
-// Script para mostrar el modal de login si hay un error de login
 <?php
-// La variable $error_login debe ser pasada desde LoginController si hay un error.
+
 if (isset($error_login) && !empty($error_login)): 
 ?>
 document.addEventListener('DOMContentLoaded', function() {
     var loginModal = document.getElementById('home-modal_login');
     if (loginModal) {
-        loginModal.style.display = 'block'; // O la forma que uses para mostrarlo (ej. añadiendo una clase activa)
-        
-        // Opcional: Si el modal de registro también podría estar visible y quieres ocultarlo
-        // var registerModal = document.getElementById('home-modal_register');
-        // if (registerModal) {
-        //     registerModal.style.display = 'none';
-        // }
+        loginModal.style.display = 'block';
     } else {
         console.log("Modal de login (home-modal_login) no encontrado en el DOM para mostrar error.");
     }
