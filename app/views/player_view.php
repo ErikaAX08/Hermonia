@@ -374,6 +374,54 @@ include BASE_TEMPLATES . 'header.php';
 
 <script>
     document.addEventListener("DOMContentLoaded", function () {
+
+         // --- INICIO: LÓGICA PARA LOS CARRUSELES ---
+    const carousels = document.querySelectorAll('.player-page_slider_section');
+
+    carousels.forEach(carousel => {
+        const contentSlider = carousel.querySelector('.player-page_content_slider');
+        const prevButton = carousel.querySelector('.player-page_slider_nav_button_back');
+        const nextButton = carousel.querySelector('.player-page_slider_nav_button_next');
+
+        if (!contentSlider || !prevButton || !nextButton) {
+            console.warn("Advertencia: Faltan elementos del carrusel en una sección.", carousel);
+            return; // Saltar este carrusel si faltan partes esenciales
+        }
+
+        // Función para mover el carrusel
+        const scrollCarousel = (direction) => {
+            // Intentar obtener el ancho del primer elemento hijo directo (que sería un 'slide')
+            // En tu caso de canciones, es '.player-page_songs_container'
+            // En el de playlists, es '.player-page_playlist_card'
+            // Haremos esto más genérico, asumiendo que los hijos directos son los slides.
+            const firstSlide = contentSlider.children[0];
+            if (!firstSlide) return; // No hay slides para medir
+
+            const scrollAmount = firstSlide.offsetWidth; // Ancho del primer "slide" (ej. player-page_songs_container)
+
+            // Aplicar un margen si los slides tienen gap o margin
+            const slideStyle = window.getComputedStyle(firstSlide);
+            const slideMarginRight = parseFloat(slideStyle.marginRight) || 0;
+            const slideMarginLeft = parseFloat(slideStyle.marginLeft) || 0;
+            const totalScrollAmount = scrollAmount + slideMarginLeft + slideMarginRight;
+
+            if (direction === 'next') {
+                contentSlider.scrollBy({ left: totalScrollAmount, behavior: 'smooth' });
+            } else if (direction === 'prev') {
+                contentSlider.scrollBy({ left: -totalScrollAmount, behavior: 'smooth' });
+            }
+        };
+
+        prevButton.addEventListener('click', function () {
+            scrollCarousel('prev');
+        });
+
+        nextButton.addEventListener('click', function () {
+            scrollCarousel('next');
+        });
+    });
+    // --- FIN: LÓGICA PARA LOS CARRUSELES ---
+
     const audioPlayer = document.getElementById('audio'); // Elemento de audio
     const songCards = document.querySelectorAll('.player-page_song_card'); // Seleccionar las tarjetas de canciones
     const playButton = document.querySelector('.player-controller_button-play'); // Botón de play/pause

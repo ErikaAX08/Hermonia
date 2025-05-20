@@ -288,7 +288,7 @@ if (isset($error_login) && !empty($error_login)):
 document.addEventListener('DOMContentLoaded', function() {
     var loginModal = document.getElementById('home-modal_login');
     if (loginModal) {
-        loginModal.style.display = 'block';
+        loginModal.style.display = 'block'; 
     } else {
         console.log("Modal de login (home-modal_login) no encontrado en el DOM para mostrar error.");
     }
