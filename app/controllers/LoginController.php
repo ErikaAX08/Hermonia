@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Core\ConexionBD;
 use App\Core\Controller;
+use \PDOException;
 
 class LoginController extends Controller
 {
@@ -13,128 +14,93 @@ class LoginController extends Controller
     {
         $this->db = new ConexionBD();
     }
-    
-    public function login()
+
+    public function login() // Este método maneja el POST del formulario de login
     {
-        // Iniciar sesión
         if (session_status() == PHP_SESSION_NONE) {
             session_start();
         }
-        
-        // Si ya hay una sesión activa, redirigir a player
+
         if (isset($_SESSION['user_id'])) {
             header("Location: " . BASE_URL . "player");
             exit;
         }
-        
-        // Depuración (quitar en producción)
-        if ($_SERVER["REQUEST_METHOD"] == "POST") {
-            echo "<pre>";
-            var_dump($_POST);
-            echo "</pre>";
-        }
+
+        $error_message = null; 
 
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
-            $email = $_POST["emailLogin"] ?? null;
-            $password = $_POST["passwordLogin"] ?? null;
+            $email = trim($_POST["emailLogin"] ?? '');
+            $password = $_POST["passwordLogin"] ?? '';
 
-            if (!$email || !$password) {
-                echo "Error: Campos vacíos.";
-                // Mostrar la vista de login nuevamente
-                $this->view('login', ['error' => 'Campos vacíos']);
-                return;
-            }
+            if (empty($email) || empty($password)) {
+                $error_message = 'Por favor, ingresa tu correo y contraseña.';
+            } else {
+                try {
+                    $sql = "SELECT id, email, nombre, password FROM usuarios WHERE email = :email";
+                    $stmt = $this->db->pdo->prepare($sql);
+                    $stmt->bindParam(':email', $email);
+                    $stmt->execute();
+                    $usuario = $stmt->fetch();
 
-            try {
-                // Verificar si el usuario existe
-                $sql = "SELECT * FROM usuarios WHERE email = :email";
-                $stmt = $this->db->pdo->prepare($sql);
-                $stmt->bindParam(':email', $email);
-                $stmt->execute();
-                $usuario = $stmt->fetch();
+                    if ($usuario) {
+                        if (password_verify($password, $usuario['password'])) {
+                            $_SESSION['user_id'] = $usuario['id'];
+                            $_SESSION['user_email'] = $usuario['email'];
+                            $_SESSION['user_name'] = $usuario['nombre'];
 
-                // Depuración (quitar en producción)
-                if ($usuario) {
-                    echo "Usuario encontrado en la base de datos:";
-                    echo "<pre>";
-                    print_r($usuario);
-                    echo "</pre>";
-                }
+                            session_regenerate_id(true);
 
-                if ($usuario) {
-                    // Verificar la contraseña
-                    $password_hash = $usuario['password'];
-                    $password_verify = password_verify($password, $password_hash);
-
-                    // Depuración (quitar en producción)
-                    echo "Resultado de password_verify: " . ($password_verify ? "true" : "false") . "\n";
-                   
-                    if($password_verify) {
-                        // Iniciar sesión
-                        $_SESSION['user_id'] = $usuario['id'];
-                        $_SESSION['user_email'] = $usuario['email'];
-                        $_SESSION['user_name'] = $usuario['nombre'];
-                        
-                        // Depuración (quitar en producción)
-                        echo "Sesión iniciada correctamente:";
-                        echo "<pre>";
-                        print_r($_SESSION);
-                        echo "</pre>";
-
-                        // Redirigir a la página de 'player'
-                        header("Location: " . BASE_URL . "player");
-                        exit;
+                            header("Location: " . BASE_URL . "player");
+                            exit;
+                        } else {
+                            $error_message = 'El correo electrónico o la contraseña son incorrectos.';
+                        }
                     } else {
-                        echo "Error: Contraseña incorrecta.";
-                        $this->view('login', ['error' => 'Contraseña incorrecta']);
-                        return;
+                        $error_message = 'El correo electrónico o la contraseña son incorrectos.';
                     }
-                } else {
-                    echo "Error: Credenciales incorrectas.";
-                    $this->view('login', ['error' => 'Credenciales incorrectas']);
-                    return;
+                } catch (PDOException $e) {
+                    // En un entorno real, loguearías este error: error_log($e->getMessage());
+                    $error_message = 'Ocurrió un problema. Por favor, intenta más tarde.';
                 }
-            } catch (\PDOException $e) {
-                echo "Error de base de datos: " . $e->getMessage();
-                $this->view('login', ['error' => 'Error de base de datos']);
-                return;
             }
+            // --- CAMBIO AQUÍ ---
+            // Mostrar la vista 'home' nuevamente con el mensaje de error si existe
+            $this->view('home', ['error_login' => $error_message]); // Usamos 'error_login' para no colisionar con otros posibles errores en home
+            return; 
         }
-        
-        // Si no es POST, mostrar formulario de login
-        $this->view('login', []);
+
+        // --- CAMBIO AQUÍ ---
+        // Si no es POST o si es la primera carga, mostrar formulario de login (que está en 'home')
+        // Si se llega aquí por GET a /login/login (o la ruta que lleve a este método)
+        // también se mostrará 'home'. Considera si esto es lo que quieres o si
+        // el método 'index' es el único que debe mostrar el login inicialmente.
+        $this->view('home', ['error_login' => null]); // Sin error al cargar por primera vez vía este método
     }
 
-    // Método para mostrar la vista de inicio de sesión
-    public function index()
+    public function index() // Este método usualmente maneja la carga inicial de la página de login (GET /login)
     {
-        // Iniciar sesión
         if (session_status() == PHP_SESSION_NONE) {
             session_start();
         }
-        
-        // Si ya hay una sesión activa, redirigir a player
+
         if (isset($_SESSION['user_id'])) {
             header("Location: " . BASE_URL . "player");
             exit;
         }
-        
-        // Mostrar la vista de login, no la de player
-        $this->view('login', []);
+
+        // --- CAMBIO AQUÍ ---
+        // Mostrar la vista 'home', que contiene el modal de login
+        $this->view('home', ['error_login' => null]); // Pasamos null o un array vacío si no hay error que mostrar inicialmente
     }
-    
-    // Método para cerrar sesión
+
     public function logout()
     {
-        // Iniciar sesión si no está iniciada
         if (session_status() == PHP_SESSION_NONE) {
             session_start();
         }
-        
-        // Destruir todas las variables de sesión
+
         $_SESSION = [];
-        
-        // Destruir la cookie de sesión
+
         if (ini_get("session.use_cookies")) {
             $params = session_get_cookie_params();
             setcookie(session_name(), '', time() - 42000,
@@ -142,12 +108,10 @@ class LoginController extends Controller
                 $params["secure"], $params["httponly"]
             );
         }
-        
-        // Finalmente, destruir la sesión
+
         session_destroy();
-        
-        // Redirigir al login
-        header("Location: " . BASE_URL . "login");
+
+        header("Location: " . BASE_URL . "login"); // Asumo que /login te lleva a LoginController@index
         exit;
     }
 }
