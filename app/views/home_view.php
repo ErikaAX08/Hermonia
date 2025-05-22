@@ -11,7 +11,13 @@ if (defined('BASE_TEMPLATES')) {
     
 }
 ?>
-
+<style>
+/* Asegura que el modal tenga scroll si el contenido es muy grande */
+.home-modal {
+    max-height: 90vh;
+    overflow-y: auto;
+}
+</style>
 <body class="home-body">
 
 <div id="home-main" class="home-container">
@@ -245,12 +251,12 @@ if (defined('BASE_TEMPLATES')) {
 
 <script src="<?php echo defined('BASE_ASSETS') ? BASE_ASSETS : ''; ?>js/home.js"></script>
 <script>
-/document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function() {
     // Selectores de Modales y Botones de Apertura
     const loginModal = document.getElementById('home-modal_login');
     const registerModal = document.getElementById('home-modal_register');
-    const openLoginButton = document.getElementById('home-button_login_open');
-    const openRegisterButton = document.getElementById('home-button_register_open');
+    const openLoginButton = document.getElementById('home-button_login'); // corregido
+    const openRegisterButton = document.getElementById('home-button_register'); // corregido
 
     // Selectores de Botones "Volver" dentro de los Modales
     const backLoginButton = document.querySelector('.home-modal_button_back_login');
