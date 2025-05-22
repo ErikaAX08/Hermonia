@@ -34,6 +34,7 @@ class RegisterController
                 
                 if (empty($email) || empty($password) || empty($nombre) || empty($apellidos) || empty($fechaNacimiento) || empty($pais)) {
                     $_SESSION['error_register'] = "Todos los campos son obligatorios.";
+                    $_SESSION['error_register_js_trigger'] = true;
                     header("Location: " . BASE_URL); // Redirige a la página con el formulario
                     exit;
                 }
@@ -41,6 +42,7 @@ class RegisterController
                 // --- Validar formato de email ---
                 if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
                     $_SESSION['error_register'] = "El formato del correo electrónico no es válido.";
+                    $_SESSION['error_register_js_trigger'] = true;
                     header("Location: " . BASE_URL);
                     exit;
                 }
@@ -49,6 +51,7 @@ class RegisterController
                 $passwordRegex = '/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\dñÑÁÉÍÓÚáéíóúüÜ@$!%*?&._\-]{8,}$/u';
                 if (!preg_match($passwordRegex, $password)) {
                     $_SESSION['error_register'] = "La contraseña debe tener al menos 8 caracteres, mayúsculas (A-Z), minúsculas (a-z), un número (0-9) y puede contener ñ, acentos y ciertos símbolos.";
+                    $_SESSION['error_register_js_trigger'] = true;
                     header("Location: " . BASE_URL);
                     exit;
                 }
@@ -60,6 +63,7 @@ class RegisterController
                 $fechaNacimientoDate = DateTime::createFromFormat('Y-m-d', $fechaNacimiento);
                 if (!$fechaNacimientoDate || $fechaNacimientoDate->format('Y-m-d') !== $fechaNacimiento) { // Chequeo extra de validez de fecha
                     $_SESSION['error_register'] = "La fecha de nacimiento no es válida.";
+                    $_SESSION['error_register_js_trigger'] = true;
                     header("Location: " . BASE_URL);
                     exit;
                 }
@@ -68,6 +72,7 @@ class RegisterController
 
                 if ($edad < 13) {
                     $_SESSION['error_register'] = "Debes tener al menos 13 años para registrarte.";
+                    $_SESSION['error_register_js_trigger'] = true;
                     header("Location: " . BASE_URL);
                     exit;
                 }
@@ -88,6 +93,7 @@ class RegisterController
                     $stmtCheck->execute();
                     if ($stmtCheck->fetch()) {
                         $_SESSION['error_register'] = "Este correo electrónico ya está registrado.";
+                        $_SESSION['error_register_js_trigger'] = true;
                         header("Location: " . BASE_URL);
                         exit;
                     }
@@ -123,18 +129,19 @@ class RegisterController
                         exit;
                     } else {
                         $_SESSION['error_register'] = "Error: No se pudo registrar el usuario. Inténtalo más tarde.";
-                        $_SESSION['error_register_js_trigger'] = true; 
+                        $_SESSION['error_register_js_trigger'] = true;
                         header("Location: " . BASE_URL);
                         exit;
                     }
                 } catch (\PDOException $e) {
                     $_SESSION['error_register'] = "Error de base de datos. Inténtalo más tarde.";
-                    // Loguear el error real: error_log("PDOException en registro: " . $e->getMessage());
+                    $_SESSION['error_register_js_trigger'] = true;
                     header("Location: " . BASE_URL);
                     exit;
                 }
             } else {
                  $_SESSION['error_register'] = "Error: El formulario no se envió correctamente.";
+                 $_SESSION['error_register_js_trigger'] = true;
                  header("Location: " . BASE_URL);
                  exit;
             }
