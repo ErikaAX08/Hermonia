@@ -103,6 +103,24 @@
     display: block;
 }
 
+.player-menu_item_tag {
+    font-size: 8px;
+    color: #b10000;
+    background-color: #ffeaea;
+    border: 1px solid #ffb3b3;
+    border-radius: 12px;
+    padding: 2px 10px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 120px;
+    display: inline-block;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+
 .player-menu_item_icon_svg path {
     stroke: var(--primary-text-color);
 }

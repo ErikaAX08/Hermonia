@@ -10,12 +10,15 @@ include BASE_TEMPLATES . 'header.php';
         <div>
            <img src="<?php echo BASE_ASSETS; ?>img/logo_large.svg"  alt="Hermonia"/>
         </div>
+
         <form class="player-search_form">
             <img alt="Buscar" src="<?php echo BASE_ASSETS; ?>img/icons/search.svg">
             <input class="player-search_input" placeholder="Buscar">
         </form>
+        
         <div class="player-list_container">
             <ul class="player-menu">
+
                 <li class="player-menu_item player-menu_item_selected">
                     <div class="player-menu_item_icon_container">
                         <svg class="player-menu_item_icon_svg" width="14" height="16" viewBox="0 0 14 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -24,6 +27,7 @@ include BASE_TEMPLATES . 'header.php';
                     </div>
                     <span class="player-menu_item_text">Inicio</span>
                 </li>
+
                 <li class="player-menu_item">
                     <div class="player-menu_item_icon_container">
                         <svg  class="player-menu_item_icon_svg" width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -33,7 +37,9 @@ include BASE_TEMPLATES . 'header.php';
                         </svg>
                     </div>
                     <span class="player-menu_item_text">Descubrir</span>
+                    <span class="player-menu_item_tag">Próximamente</span>
                 </li>
+
                 <li class="player-menu_item">
                     <div class="player-menu_item_icon_container">
                         <svg  class="player-menu_item_icon_svg" width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -41,6 +47,7 @@ include BASE_TEMPLATES . 'header.php';
                         </svg>
                     </div>
                     <span class="player-menu_item_text">Radio</span>
+                    <span class="player-menu_item_tag">Próximamente</span>
                 </li>
             </ul>
             <span class="player-menu_title">Biblioteca</span>
@@ -52,6 +59,7 @@ include BASE_TEMPLATES . 'header.php';
                         </svg>
                     </div>
                     <span class="player-menu_item_text">Artistas</span>
+                    <span class="player-menu_item_tag">Próximamente</span>
                 </li>
                 <li class="player-menu_item">
                     <div class="player-menu_item_icon_container">
@@ -60,6 +68,7 @@ include BASE_TEMPLATES . 'header.php';
                         </svg>
                     </div>
                     <span class="player-menu_item_text">Álbumes</span>
+                    <span class="player-menu_item_tag">Próximamente</span>
                 </li>
                 <li class="player-menu_item">
                     <div class="player-menu_item_icon_container">
@@ -68,6 +77,7 @@ include BASE_TEMPLATES . 'header.php';
                         </svg>
                     </div>
                     <span class="player-menu_item_text">Canciones</span>
+                    <span class="player-menu_item_tag">Próximamente</span>
                 </li>
                 <li class="player-menu_item">
                     <div class="player-menu_item_icon_container">
@@ -76,6 +86,7 @@ include BASE_TEMPLATES . 'header.php';
                         </svg>
                     </div>
                     <span class="player-menu_item_text">Hechos para ti</span>
+                    <span class="player-menu_item_tag">Próximamente</span>
                 </li>
             </ul>
             <span class="player-menu_title">Playlists</span>
@@ -87,6 +98,7 @@ include BASE_TEMPLATES . 'header.php';
                         </svg>
                     </div>
                     <span class="player-menu_item_text">Todas las Playlist</span>
+                    <span class="player-menu_item_tag">Próximamente</span>
                 </li>
                 <li class="player-menu_item">
                     <div class="player-menu_item_icon_container">
@@ -95,61 +107,9 @@ include BASE_TEMPLATES . 'header.php';
                         </svg>
                     </div>
                     <span class="player-menu_item_text">Canciones Favoritas</span>
+                    <span class="player-menu_item_tag">Próximamente</span>
                 </li>
-                <li class="player-menu_item">
-                    <div class="player-menu_item_icon_container">
-                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M10.8337 13.7443C10.8337 15.356 12.1445 16.6668 13.7562 16.6668C15.3678 16.6668 16.6787 15.356 16.6787 13.7443C16.6787 13.5968 16.6562 13.4552 16.6345 13.3135H16.667V5.00016H18.3337V3.3335H15.8337C15.6126 3.3335 15.4007 3.42129 15.2444 3.57757C15.0881 3.73385 15.0003 3.94582 15.0003 4.16683V11.111C14.612 10.9242 14.1871 10.8257 13.7562 10.8227C12.9814 10.8233 12.2386 11.1313 11.6907 11.6791C11.1428 12.2268 10.8345 12.9696 10.8337 13.7443ZM1.66699 4.16683H13.3337V5.8335H1.66699V4.16683Z" fill="#261551"/>
-                            <path d="M1.66699 7.5H13.3337V9.16667H1.66699V7.5ZM1.66699 10.8333H9.16699V12.5H1.66699V10.8333ZM1.66699 14.1667H9.16699V15.8333H1.66699V14.1667Z" fill="#261551"/>
-                        </svg>
-                    </div>
-                    <span class="player-menu_item_text">Raw Alejandro</span>
-                </li>
-                <li class="player-menu_item">
-                    <div class="player-menu_item_icon_container">
-                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M10.8337 13.7443C10.8337 15.356 12.1445 16.6668 13.7562 16.6668C15.3678 16.6668 16.6787 15.356 16.6787 13.7443C16.6787 13.5968 16.6562 13.4552 16.6345 13.3135H16.667V5.00016H18.3337V3.3335H15.8337C15.6126 3.3335 15.4007 3.42129 15.2444 3.57757C15.0881 3.73385 15.0003 3.94582 15.0003 4.16683V11.111C14.612 10.9242 14.1871 10.8257 13.7562 10.8227C12.9814 10.8233 12.2386 11.1313 11.6907 11.6791C11.1428 12.2268 10.8345 12.9696 10.8337 13.7443ZM1.66699 4.16683H13.3337V5.8335H1.66699V4.16683Z" fill="#261551"/>
-                            <path d="M1.66699 7.5H13.3337V9.16667H1.66699V7.5ZM1.66699 10.8333H9.16699V12.5H1.66699V10.8333ZM1.66699 14.1667H9.16699V15.8333H1.66699V14.1667Z" fill="#261551"/>
-                        </svg>
-                    </div>
-                    <span class="player-menu_item_text">Billie Eilish</span>
-                </li>
-                <li class="player-menu_item">
-                    <div class="player-menu_item_icon_container">
-                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M10.8337 13.7443C10.8337 15.356 12.1445 16.6668 13.7562 16.6668C15.3678 16.6668 16.6787 15.356 16.6787 13.7443C16.6787 13.5968 16.6562 13.4552 16.6345 13.3135H16.667V5.00016H18.3337V3.3335H15.8337C15.6126 3.3335 15.4007 3.42129 15.2444 3.57757C15.0881 3.73385 15.0003 3.94582 15.0003 4.16683V11.111C14.612 10.9242 14.1871 10.8257 13.7562 10.8227C12.9814 10.8233 12.2386 11.1313 11.6907 11.6791C11.1428 12.2268 10.8345 12.9696 10.8337 13.7443ZM1.66699 4.16683H13.3337V5.8335H1.66699V4.16683Z" fill="#261551"/>
-                            <path d="M1.66699 7.5H13.3337V9.16667H1.66699V7.5ZM1.66699 10.8333H9.16699V12.5H1.66699V10.8333ZM1.66699 14.1667H9.16699V15.8333H1.66699V14.1667Z" fill="#261551"/>
-                        </svg>
-                    </div>
-                    <span class="player-menu_item_text">Happier Than Ever</span>
-                </li>
-                <li class="player-menu_item">
-                    <div class="player-menu_item_icon_container">
-                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M10.8337 13.7443C10.8337 15.356 12.1445 16.6668 13.7562 16.6668C15.3678 16.6668 16.6787 15.356 16.6787 13.7443C16.6787 13.5968 16.6562 13.4552 16.6345 13.3135H16.667V5.00016H18.3337V3.3335H15.8337C15.6126 3.3335 15.4007 3.42129 15.2444 3.57757C15.0881 3.73385 15.0003 3.94582 15.0003 4.16683V11.111C14.612 10.9242 14.1871 10.8257 13.7562 10.8227C12.9814 10.8233 12.2386 11.1313 11.6907 11.6791C11.1428 12.2268 10.8345 12.9696 10.8337 13.7443ZM1.66699 4.16683H13.3337V5.8335H1.66699V4.16683Z" fill="#261551"/>
-                            <path d="M1.66699 7.5H13.3337V9.16667H1.66699V7.5ZM1.66699 10.8333H9.16699V12.5H1.66699V10.8333ZM1.66699 14.1667H9.16699V15.8333H1.66699V14.1667Z" fill="#261551"/>
-                        </svg>
-                    </div>
-                    <span class="player-menu_item_text">When we all fall asleep, Where do we go?</span>
-                </li>
-                <li class="player-menu_item">
-                    <div class="player-menu_item_icon_container">
-                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M10.8337 13.7443C10.8337 15.356 12.1445 16.6668 13.7562 16.6668C15.3678 16.6668 16.6787 15.356 16.6787 13.7443C16.6787 13.5968 16.6562 13.4552 16.6345 13.3135H16.667V5.00016H18.3337V3.3335H15.8337C15.6126 3.3335 15.4007 3.42129 15.2444 3.57757C15.0881 3.73385 15.0003 3.94582 15.0003 4.16683V11.111C14.612 10.9242 14.1871 10.8257 13.7562 10.8227C12.9814 10.8233 12.2386 11.1313 11.6907 11.6791C11.1428 12.2268 10.8345 12.9696 10.8337 13.7443ZM1.66699 4.16683H13.3337V5.8335H1.66699V4.16683Z" fill="#261551"/>
-                            <path d="M1.66699 7.5H13.3337V9.16667H1.66699V7.5ZM1.66699 10.8333H9.16699V12.5H1.66699V10.8333ZM1.66699 14.1667H9.16699V15.8333H1.66699V14.1667Z" fill="#261551"/>
-                        </svg>
-                    </div>
-                    <span class="player-menu_item_text">Hit me hard and soft</span>
-                </li>
-                <li class="player-menu_item">
-                    <div class="player-menu_item_icon_container">
-                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M10.8337 13.7443C10.8337 15.356 12.1445 16.6668 13.7562 16.6668C15.3678 16.6668 16.6787 15.356 16.6787 13.7443C16.6787 13.5968 16.6562 13.4552 16.6345 13.3135H16.667V5.00016H18.3337V3.3335H15.8337C15.6126 3.3335 15.4007 3.42129 15.2444 3.57757C15.0881 3.73385 15.0003 3.94582 15.0003 4.16683V11.111C14.612 10.9242 14.1871 10.8257 13.7562 10.8227C12.9814 10.8233 12.2386 11.1313 11.6907 11.6791C11.1428 12.2268 10.8345 12.9696 10.8337 13.7443ZM1.66699 4.16683H13.3337V5.8335H1.66699V4.16683Z" fill="#261551"/>
-                            <path d="M1.66699 7.5H13.3337V9.16667H1.66699V7.5ZM1.66699 10.8333H9.16699V12.5H1.66699V10.8333ZM1.66699 14.1667H9.16699V15.8333H1.66699V14.1667Z" fill="#261551"/>
-                        </svg>
-                    </div>
-                    <span class="player-menu_item_text">FINNEAS</span>
-                </li>
+
             </ul>
         </div>
         <div class="player-profile_container">
@@ -185,7 +145,7 @@ include BASE_TEMPLATES . 'header.php';
     <div class="player-container player-content">
         <!-- Page -->
         <div class="player-page">
-            <h2 class="player-page_title">Descubrir</h2>
+            <h2 class="player-page_title">Inicio</h2>
             <div class="player-page_slider_section">
                 <div class="player-page_slider_nav_container">
                     <div class="player-page_slider_nav_button player-page_slider_nav_button_back">
