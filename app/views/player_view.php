@@ -117,28 +117,10 @@ include BASE_TEMPLATES . 'header.php';
                 <?php if(isset($user)) : ?>
                     <h3 class="player-profile_username"><?php echo htmlspecialchars($user['nombre'] ?? ''); ?></h3>
                     <span class="player-search_subscription"><?php echo htmlspecialchars($user['suscripcion'] ?? ''); ?></span>
-                    <button class="button button-accent">Mejorar Plan</button>
                     <button class="logout button" onclick="window.location.href='<?php echo BASE_URL; ?>?route=logout'">Cerrar Sesión</button>
                 <?php else : ?>
                     <p>No se pudieron cargar los datos del usuario.</p>
                 <?php endif; ?>
-            </div>
-            <div class="player-profile_options">
-                <div>
-                    <svg width="14" height="16" viewBox="0 0 14 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M7.00021 0.5C3.89371 0.5 1.37521 3.0185 1.37521 6.125V9.30762L0.32371 11.6908C0.267069 11.8192 0.243358 11.9597 0.254725 12.0996C0.266092 12.2395 0.312178 12.3743 0.388809 12.4919C0.46544 12.6095 0.570195 12.7061 0.693585 12.773C0.816976 12.8399 0.955104 12.875 1.09546 12.875H12.905C13.0453 12.875 13.1834 12.8399 13.3068 12.773C13.4302 12.7061 13.535 12.6095 13.6116 12.4919C13.6882 12.3743 13.7343 12.2395 13.7457 12.0996C13.7571 11.9597 13.7334 11.8192 13.6767 11.6908L12.6252 9.30762V6.125C12.6252 3.0185 10.1067 0.5 7.00021 0.5ZM7.00021 15.5C6.46843 15.5001 5.95381 15.3118 5.54763 14.9686C5.14145 14.6253 4.86997 14.1493 4.78133 13.625H9.21908C9.13046 14.1493 8.85897 14.6253 8.45279 14.9686C8.04661 15.3118 7.53199 15.5001 7.00021 15.5Z" fill="#261551"/>
-                    </svg>
-                </div><?php
-                $additional_styles = "views/player.css";
-                include BASE_TEMPLATES . 'header.php';
-                ?>
-
-                <div class="player-profile_photo_container">
-                    <svg width="24" height="26" viewBox="0 0 24 26" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M12 14.5C15.5899 14.5 18.5 11.5899 18.5 8C18.5 4.41015 15.5899 1.5 12 1.5C8.41015 1.5 5.5 4.41015 5.5 8C5.5 11.5899 8.41015 14.5 12 14.5Z" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-                        <path d="M1.5 24.5C1.5 19.5 5.5 14.5 12 14.5C18.5 14.5 22.5 19.5 22.5 24.5" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                </div>
             </div>
         </div>
     </aside>
