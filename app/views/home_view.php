@@ -47,12 +47,17 @@ if (defined('BASE_TEMPLATES')) {
             <button id="home-button_register" class="button button-accent">Pruébalo Gratis</button>
             <button id="home-button_login" class="button button-outlined">Iniciar Sesión</button>
         </div>
+        
+        <!--
+        En construccion
+        
         <a class="home-url" href="#">
             Consulta el plan de estudiante
             <svg width="6" height="9" viewBox="0 0 6 9" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path fill-rule="evenodd" clip-rule="evenodd" d="M4.92455 4.94428L1.62464 8.4799L0.799805 7.59615L3.6873 4.5024L0.799805 1.40865L1.62464 0.524902L4.92455 4.06053C5.03391 4.17773 5.09535 4.33667 5.09535 4.5024C5.09535 4.66813 5.03391 4.82707 4.92455 4.94428Z" fill="white"/>
             </svg>
         </a>
+        -->
     </div>
 </div>
 
