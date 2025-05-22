@@ -255,8 +255,8 @@ document.addEventListener('DOMContentLoaded', function() {
     // Selectores de Modales y Botones de Apertura
     const loginModal = document.getElementById('home-modal_login');
     const registerModal = document.getElementById('home-modal_register');
-    const openLoginButton = document.getElementById('home-button_login'); // corregido
-    const openRegisterButton = document.getElementById('home-button_register'); // corregido
+    const openLoginButton = document.getElementById('home-button_login_open'); // corregido
+    const openRegisterButton = document.getElementById('home-button_register_open'); // corregido
 
     // Selectores de Botones "Volver" dentro de los Modales
     const backLoginButton = document.querySelector('.home-modal_button_back_login');
