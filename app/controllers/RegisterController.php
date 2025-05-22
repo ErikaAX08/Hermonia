@@ -112,15 +112,14 @@ class RegisterController
                     $stmt->bindParam(':suscripcion', $suscripcion);
 
                     if ($stmt->execute()) {
-                        
-                         $_SESSION['user_id'] = $this->db->pdo->lastInsertId();
-                         $_SESSION['user_email'] = $email;
+                        $_SESSION['user_id'] = $this->db->pdo->lastInsertId();
+                        $_SESSION['user_email'] = $email;
                         $_SESSION['user_name'] = $nombre;
                         session_regenerate_id(true);
-                        
+
                         $_SESSION['success_register'] = "¡Registro exitoso! Ahora puedes iniciar sesión.";
                         $_SESSION['success_register_js_trigger'] = true; // <--- AÑADIR ESTO
-                        header("Location: " . BASE_URL); // Redirige a la home para que vean el mensaje de éxito y/o el modal de login
+                        header("Location: " . BASE_URL . "logged"); // <--- Corregido
                         exit;
                     } else {
                         $_SESSION['error_register'] = "Error: No se pudo registrar el usuario. Inténtalo más tarde.";
