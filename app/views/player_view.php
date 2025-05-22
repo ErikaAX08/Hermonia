@@ -533,13 +533,16 @@ include BASE_TEMPLATES . 'header.php';
     });
 
     // Formatear el tiempo en minutos y segundos
-    function formatTime(seconds) {
-        const minutes = Math.floor(seconds / 60);
-        const secs = Math.floor(seconds % 60);
-        return `${minutes}:${secs < 10 ? '0' : ''}${secs}`;
-    }
+        function formatTime(seconds) {
+            if (isNaN(seconds) || seconds === Infinity) {
+                return "0:00"; // Se observa inicio desde 00:00
+            }
+            const minutes = Math.floor(seconds / 60);
+            const secs = Math.floor(seconds % 60);
+            return `${minutes}:${secs < 10 ? '0' : ''}${secs}`;
+        }
 
-    // Permitir al usuario buscar un punto específico en la canción
+        // Permitir al usuario buscar un punto específico en la canción
     progressContainer.addEventListener('click', function (e) {
         const rect = progressContainer.getBoundingClientRect();
         const clickX = e.clientX - rect.left;
