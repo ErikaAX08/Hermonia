@@ -6,6 +6,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const home_register_modal = document.getElementById("home-modal_register");
     const registerForm = document.getElementById("registerForm");
     const passwordInput = document.getElementById("passwordRegister");
+    const backButton = document.getElementById("backButton");
 
     home_login_button.addEventListener("click", function (e) {
         openModal(home_login_modal);
@@ -27,6 +28,10 @@ document.addEventListener("DOMContentLoaded", function () {
             closeModal();
         }
     });
+    
+    backButton.addEventListener("click", function(e) {
+        closeModal();
+    })
     
 
     function openModal(modal) {

@@ -244,7 +244,7 @@ if (defined('BASE_TEMPLATES')) {
     </div>
 
     <div class="home-modal_register_footer">
-        <button type="button" class="button button-outlined-light" onclick="document.getElementById('home-modal_register').style.display='none';">Volver</button>
+        <button type="button" id="backButton" class="button button-outlined-light">Volver</button>
         <button class="button button-light" type="submit" form="registerForm">Continuar</button>
     </div>
 </div>
